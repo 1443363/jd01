@@ -1,4 +1,4 @@
-package homework1;
+package homework01;
 
 public abstract class Car{
     private int numberOfSeats;

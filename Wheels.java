@@ -1,4 +1,4 @@
-package homework1;
+package homework01;
 
 public abstract class Wheels {
     private int radius;
