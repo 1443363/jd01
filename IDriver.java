@@ -1,4 +1,4 @@
-package homework01;
+package homework1;
 
 public interface IDriver {
     void openAndStart();
