@@ -1,9 +1,15 @@
-package homework1;
+package homework1.car.details;
 
-public abstract class Engine {
+public class Engine{
     private int capacity;
     private String fuelAcceptableQuality;
     private String name;
+
+    public Engine(String name, int capacity, String fuelAcceptableQuality) {
+        this.name = name;
+        this.capacity = capacity;
+        this.fuelAcceptableQuality = fuelAcceptableQuality;
+    }
 
     public int getCapacity() {
         return capacity;

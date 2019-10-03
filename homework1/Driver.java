@@ -1,11 +1,18 @@
 package homework1;
 
-public abstract class Driver implements IDriver {
+import homework1.car.details.Engine;
+import homework1.car.details.Wheels;
+
+public class Driver implements IDriver {
     private int drivingExperience;
     private String driverLicense;
-    private boolean isRequiredKey;
+    private String key;
 
-
+    public Driver(String driverLicense, int drivingExperience, String key) {
+        this.driverLicense = driverLicense;
+        this.drivingExperience = drivingExperience;
+        this.key = key;
+    }
 
     public String getDriverLicense() {
         return driverLicense;
@@ -19,16 +26,12 @@ public abstract class Driver implements IDriver {
         }
     }
 
-    public boolean getRequiredKey() {
-        return isRequiredKey;
+    public String getKey() {
+        return key;
     }
 
-    public void setRequiredKey(Car car, String key) {
-        if (car.getLock().equals(key)) {
-            this.isRequiredKey = true;
-        } else {
-            this.isRequiredKey = false;
-        }
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public int getDrivingExperience() {
@@ -37,5 +40,42 @@ public abstract class Driver implements IDriver {
 
     public void setDrivingExperience(int drivingExperience) {
         this.drivingExperience = drivingExperience;
+    }
+
+    @Override
+    public void openAndStart(Car car) {
+        if (car.getLock().equals(this.key)) {
+            System.out.println("Водитель открыл и завел машину.");
+        } else {
+            System.out.println("У водителя нет необходимого ключа. Дверь заблокирована.");
+        }
+    }
+
+    @Override
+    public void drive(Car car) {
+        if (car.getDriverLicenseAcceptableCategory().equals(this.driverLicense)) {
+            System.out.println("Водитель начал движение.");
+        } else {
+            System.out.println("У водителя нету необходимой квалификации для вождения данного автомобиля.");
+            System.exit(0);
+        }
+    }
+
+    @Override
+    public void boarding(Car car) {
+        System.out.println("Водитель принял " + car.getNumberOfSeats() + " попутчика.");
+    }
+
+    @Override
+    public void gasUp(Engine engine) {
+        System.out.println("Водитель заправил " + engine.getCapacity() + " литров " + engine.getFuelAcceptableQuality() +
+                " бензина для " + engine.getName() + " мотора.");
+        System.out.println("/*********************************************************************************************/");
+    }
+
+    @Override
+    public void burnRubber(Wheels wheels) {
+        System.out.println("Водитель начал ускоряться, сцепление с дорогой ему помогали держать его замечательные " + wheels.getTyresType()
+                + " марки " + wheels.getName() + " и радиусом " + wheels.getRadius() + " см.");
     }
 }
