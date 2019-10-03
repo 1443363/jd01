@@ -20,6 +20,10 @@ public abstract class Wheels {
     }
 
     public void setSnowTyres(boolean snowTyres) {
+        if(snowTyres = true) {
+            this.isSummerTyres = false;
+            this.isAllSeasonTyres = false;
+        }
         isSnowTyres = snowTyres;
     }
 
@@ -28,6 +32,10 @@ public abstract class Wheels {
     }
 
     public void setSummerTyres(boolean summerTyres) {
+        if(summerTyres = true) {
+            this.isSnowTyres = false;
+            this.isAllSeasonTyres = false;
+        }
         isSummerTyres = summerTyres;
     }
 
@@ -36,6 +44,10 @@ public abstract class Wheels {
     }
 
     public void setAllSeasonTyres(boolean allSeasonTyres) {
+        if(allSeasonTyres = true) {
+            this.isSnowTyres = false;
+            this.isSummerTyres = false;
+        }
         isAllSeasonTyres = allSeasonTyres;
     }
 
