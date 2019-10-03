@@ -11,11 +11,13 @@ public class Main {
         Engine ferrariEngine = new Engine("V6 Turbo", 15, "АИ-98");
         Wheels ferrariWheels = new Wheels(40, "355 F1 GTS");
         ferrariWheels.selectTyresType(1);
+        ferrari.setWheels(ferrariWheels);
+        ferrari.setEngine(ferrariEngine);
 
         schumacher.openAndStart(ferrari);
         schumacher.drive(ferrari);
-        schumacher.burnRubber(ferrariWheels);
+        schumacher.burnRubber(ferrari);
         schumacher.boarding(ferrari);
-        schumacher.gasUp(ferrariEngine);
+        schumacher.gasUp(ferrari);
     }
 }

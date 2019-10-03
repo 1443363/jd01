@@ -67,15 +67,15 @@ public class Driver implements IDriver {
     }
 
     @Override
-    public void gasUp(Engine engine) {
-        System.out.println("Водитель заправил " + engine.getCapacity() + " литров " + engine.getFuelAcceptableQuality() +
-                " бензина для " + engine.getName() + " мотора.");
+    public void gasUp(Car car) {
+        System.out.println("Водитель заправил " + car.getEngine().getCapacity() + " литров " + car.getEngine().getFuelAcceptableQuality() +
+                " бензина для " + car.getEngine().getName() + " мотора.");
         System.out.println("/*********************************************************************************************/");
     }
 
     @Override
-    public void burnRubber(Wheels wheels) {
-        System.out.println("Водитель начал ускоряться, сцепление с дорогой ему помогали держать его замечательные " + wheels.getTyresType()
-                + " марки " + wheels.getName() + " и радиусом " + wheels.getRadius() + " см.");
+    public void burnRubber(Car car) {
+        System.out.println("Водитель начал ускоряться, сцепление с дорогой ему помогали держать его замечательные " + car.getWheels().getTyresType()
+                + " марки " + car.getWheels().getName() + " и радиусом " + car.getWheels().getRadius() + " см.");
     }
 }

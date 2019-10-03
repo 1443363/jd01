@@ -6,7 +6,7 @@ import homework1.car.details.Wheels;
 public interface IDriver {
     void openAndStart(Car car);
     void drive(Car car);
-    void burnRubber(Wheels wheels);
+    void burnRubber(Car car);
     void boarding(Car car);
-    void gasUp(Engine engine);
+    void gasUp(Car car);
 }

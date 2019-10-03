@@ -1,11 +1,15 @@
 package homework1.car.types;
 
 import homework1.Car;
+import homework1.car.details.Engine;
+import homework1.car.details.Wheels;
 
 public class Ferrari extends Car {
     private int numberOfSeats;
     private String driverLicenseAcceptableCategory;
     private String lock;
+    private Wheels wheels;
+    private Engine engine;
 
     public Ferrari(int numberOfSeats, String driverLicenseAcceptableCategory,
                    String lock) {
@@ -42,5 +46,25 @@ public class Ferrari extends Car {
     @Override
     public void setLock(String lock) {
         this.lock = lock;
+    }
+
+    @Override
+    public Wheels getWheels() {
+        return wheels;
+    }
+
+    @Override
+    public void setWheels(Wheels wheels) {
+        this.wheels = wheels;
+    }
+
+    @Override
+    public Engine getEngine() {
+        return engine;
+    }
+
+    @Override
+    public void setEngine(Engine engine) {
+        this.engine = engine;
     }
 }
