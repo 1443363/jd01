@@ -15,7 +15,7 @@ public class Task01 {
         multiplicationResult = 1;
         for (int i = 1; i <= num; i++) {
             System.out.print(multiplicationResult + " * " + i);
-            multiplicationResult = multiplicationResult * i;
+            multiplicationResult *= i;
             System.out.println(" = " + multiplicationResult);
         }
     }
