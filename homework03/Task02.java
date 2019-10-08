@@ -76,7 +76,7 @@ public class Task02 {
     }
 
     /**ничего не выведет в консоль т.к. по умолчанию элементы массива инициализируются наллами ( = null).
-    можно было добавить "masOfNumbersAndNulls[i] = i" в цикл, но небыло задания проинициализировать элементы.
+    можно было добавить "masOfNumbersAndNulls[i] = i" в цикл, но не было задания проинициализировать элементы.
      */
     public void displayElementsThroughOneWithoutNull(int numOfElements) {
         masOfNumbersAndNulls = new Integer[numOfElements];
