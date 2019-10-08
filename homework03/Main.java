@@ -12,7 +12,7 @@ public class Main {
 //        task02.iterateElementsByWhile(3);
 //        task02.iterateElementsByFor(5);
 //        task02.iterateElementsByForEach(3);
-        task02.displayElementsThroughOne(7);
+        task02.displayElementsThroughOneWithoutNull(7);
 
 
 
