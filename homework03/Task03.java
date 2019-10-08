@@ -20,17 +20,9 @@ public class Task03 {
                 masOfTheRandomObjects[i] = new AsusComputer(random.nextInt() & Integer.MAX_VALUE, random.nextInt()
                         & Integer.MAX_VALUE);
                 System.out.println(masOfTheRandomObjects[i]);
-            } else if ((i % 3 ==0) && (i < 12)) {
+            } else {
                 masOfTheRandomObjects[i] = new AcerComputer(random.nextInt() & Integer.MAX_VALUE, random.nextInt()
                         & Integer.MAX_VALUE);
-                System.out.println(masOfTheRandomObjects[i]);
-            } else if (i > 11) {
-                masOfTheRandomObjects[i] = new Ferrari(random.nextInt() & Integer.MAX_VALUE, new String(new byte[numOfElements],
-                        Charset.forName("UTF-8")),new String(new byte[numOfElements], Charset.forName("UTF-8")));
-                System.out.println(masOfTheRandomObjects[i]);
-            } else {
-                masOfTheRandomObjects[i] = new Lada(random.nextInt(), new String(new byte[numOfElements],
-                        Charset.forName("UTF-8")),new String(new byte[numOfElements], Charset.forName("UTF-8")));
                 System.out.println(masOfTheRandomObjects[i]);
             }
         }

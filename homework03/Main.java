@@ -15,6 +15,6 @@ public class Main {
         task02.displayElementsThroughOneWithoutNull(7);
 
         Task03 task03 = new Task03();
-        task03.displayMasOfTheRandomObjects(55);
+        task03.displayMasOfTheRandomObjects(33);
     }
 }

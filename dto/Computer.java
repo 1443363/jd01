@@ -33,4 +33,9 @@ public class Computer implements IComputer {
         return hdd;
     }
 
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "{" + "ram = " + getRam().getSize() + ", hdd = " +
+                "" + getHdd().getCapacity() + '}';
+    }
 }
