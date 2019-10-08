@@ -16,7 +16,7 @@ public class Task03 {
         Random random = new Random();
 
         for (int i = 0; i < masOfTheRandomObjects.length; i++) {
-            if ((i % 2 == 0) && (i < 6)) {
+            if ((i % 2 == 0)) {
                 masOfTheRandomObjects[i] = new AsusComputer(random.nextInt() & Integer.MAX_VALUE, random.nextInt() & Integer.MAX_VALUE);
                 System.out.println(masOfTheRandomObjects[i]);
             } else if ((i % 3 ==0) && (i < 12)) {
