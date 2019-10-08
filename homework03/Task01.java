@@ -1,6 +1,8 @@
 package homework03;
 
 public class Task01 {
+    private int multiplicationResult;
+    private String numbers;
     public void viewMultiplicationTable() {
         for (int i = 1; i < 11; i++) {
             for (int j = 1; j < 11; j++) {
@@ -10,17 +12,16 @@ public class Task01 {
     }
 
     public void multiplicationOfNumbers(int num) {
-        int multiplicationResult = 1;
-
+        multiplicationResult = 1;
         for (int i = 1; i <= num; i++) {
             System.out.print(multiplicationResult + " * " + i);
-            multiplicationResult *= i;
+            multiplicationResult = multiplicationResult * i;
             System.out.println(" = " + multiplicationResult);
         }
     }
 
     public void multipicationofNumericFromNumber(int num) {
-        String numbers = String.valueOf(num);
+        numbers = String.valueOf(num);
         int multiplicationResult = 1;
 
         for (int i = 0; i < numbers.length(); i++) {
