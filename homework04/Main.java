@@ -1,9 +1,10 @@
 package homework04;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import homework04.tasks.Task01;
+import homework04.tasks.Task021;
 
 public class Main {
+
     public static void main(String[] args) {
         Task01 task01 = new Task01();
 //        task01.comparisonOfTwoLines();
@@ -11,12 +12,10 @@ public class Main {
 //        task01.displayInput();
 //        task01.convertStringInLong();
 
-        Task02 task02 = new Task02();
-//        task02.searchInString();
-        String string = "Я люблю JAVA";
-        System.out.println(string.matches("любл*"));
-        Pattern p = Pattern.compile("A??");
-        Matcher m = p.matcher(string);
-        System.out.println();
-}
+        Task021 task021 = new Task021();
+//        task021.incorrectSearchInString();
+//        task021.correctSearchInString("h+"); //false т.к. != условие "встречается 1++ раз)
+//        task021.correctSearchInString("h*"); //true т.к == условие "встречается 0++ раз)
+//        task021.correctSearchInString("h?"); // true т.к. находит 1 раз и на этом поиск заканчивается т.е == 0 | 1
+    }
 }
