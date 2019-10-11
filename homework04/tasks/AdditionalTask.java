@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 
 public class AdditionalTask {
     public static void main(String []args){
-        String pattern_phone = "^\\+?[\\(\\)\\-\\s\\d]{11,13}";
+        String pattern_phone = "\\+?\\d{1,3}\\s?\\(?\\d{1,3}\\)?\\s?\\d{2,4}\\-?\\s?\\d{1,4}\\-?\\s?\\d{1,2}?";
         Pattern pattern = Pattern.compile(pattern_phone);
         String[] telefon = new String[]{
                 "+375 29 5553628", "I love you",
