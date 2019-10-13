@@ -1,6 +1,6 @@
 package homework05;
 
-public enum Country implements CountryInformation{
+public enum Country implements ICountryInformation {
     BELARUS(280_000, 9_500_000),
     FRANCE(500_000, 15_000_000),
     USA(5_000, 50_000_000),

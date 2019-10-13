@@ -1,6 +1,6 @@
 package homework05;
 
-public interface CountryInformation {
+public interface ICountryInformation {
     int getCountryArea();
     int getCountryPopulation();
 }
