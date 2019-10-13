@@ -13,7 +13,6 @@ public class Main {
         viewCountryDataByName("FRANCE"); // 2.5 task
         compareEnums(Country.FRANCE, "FRANCE"); // 2.6 task
         returnInvalidEnum("Mongoly"); // 2.7 task "No enum constant homework05.Country.Mongoly" message
-
     }
 
     public static void viewCountryDataByName(String countryName) {

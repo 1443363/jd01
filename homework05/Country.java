@@ -15,8 +15,6 @@ public enum Country implements ICountryInformation {
     private int area;
     private int population;
 
-
-
     Country(int area, int population) {
         this.area = area;
         this.population = population;
