@@ -8,11 +8,11 @@ public class Main {
         Date secondDate = new Date();
 
         Task01 task01 = new Task01();
-        task01.compareDates(firstDate, secondDate);
-        task01.addTimeToDate(firstDate);
-        viewCountryDataByName("FRANCE");
-        compareEnums(Country.FRANCE, "FRANCE");
-        returnInvalidEnum("Mongoly"); // "No enum constant homework05.Country.Mongoly" message
+        task01.compareDates(firstDate, secondDate); // 1.1 task
+        task01.addTimeToDate(firstDate); // 1.2 task
+        viewCountryDataByName("FRANCE"); // 2.5 task
+        compareEnums(Country.FRANCE, "FRANCE"); // 2.6 task
+        returnInvalidEnum("Mongoly"); // 2.7 task "No enum constant homework05.Country.Mongoly" message
 
     }
 
