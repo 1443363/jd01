@@ -23,7 +23,7 @@ public class RegWordFinder implements IFinder {
         Matcher m = p.matcher(file.getInformationFromFile());
 
         while(m.find()) {
-            wordForSearch.setCount(wordForSearch.getCount() + 1);
+            wordForSearch.incrementCount();
         }
 
         System.out.println("Слово " + wordForSearch.getWordForSearch() + " встречается в тексте : "

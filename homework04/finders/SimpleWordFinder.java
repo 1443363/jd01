@@ -19,7 +19,7 @@ public class SimpleWordFinder implements IFinder {
        long index = fileInformation.indexOf(word);
 
        while(index >= 0) {
-           wordForSearch.setCount(wordForSearch.getCount() + 1);
+           wordForSearch.incrementCount();
            index = fileInformation.indexOf(word);
        }
 
