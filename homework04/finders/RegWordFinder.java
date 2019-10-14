@@ -19,16 +19,15 @@ public class RegWordFinder implements IFinder {
     }
 
     public void countOfWordsInFile(){
-        int countOfWordsInFile = 0;
-        Pattern p = Pattern.compile("\\b" + wordForSearch.getwordForSearch() + "\\b", Pattern.CASE_INSENSITIVE);
+        Pattern p = Pattern.compile("\\b" + wordForSearch.getWordForSearch() + "\\b", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(file.getInformationFromFile());
 
         while(m.find()) {
-            countOfWordsInFile++;
+            wordForSearch.setCount(wordForSearch.getCount() + 1);
         }
 
-        System.out.println("Слово " + wordForSearch.getwordForSearch() + " встречается в тексте : "
-                + countOfWordsInFile + " раз (Использовался поиск по строке при помощие регулярных выражений)");;
+        System.out.println("Слово " + wordForSearch.getWordForSearch() + " встречается в тексте : "
+                + wordForSearch.getCount() + " раз (Использовался поиск по строке при помощие регулярных выражений)");;
     }
 
 }

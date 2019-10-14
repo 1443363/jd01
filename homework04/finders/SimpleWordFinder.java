@@ -15,16 +15,15 @@ public class SimpleWordFinder implements IFinder {
     @Override
     public void countOfWordsInFile() {
        String fileInformation = file.getInformationFromFile().toLowerCase();
-       String word = wordForSearch.getwordForSearch().toLowerCase();
+       String word = wordForSearch.getWordForSearch().toLowerCase();
        long index = fileInformation.indexOf(word);
-       int count = 0;
 
        while(index >= 0) {
-           count++;
+           wordForSearch.setCount(wordForSearch.getCount() + 1);
            index = fileInformation.indexOf(word);
        }
 
-        System.out.println("Слово " + wordForSearch.getwordForSearch() + " встречается в тексте : "
-                + count + " раз (Использовался обычный поиск по строке)");
+        System.out.println("Слово " + wordForSearch.getWordForSearch() + " встречается в тексте : "
+                + wordForSearch.getCount() + " раз (Использовался обычный поиск по строке)");
     }
 }
