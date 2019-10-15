@@ -22,7 +22,7 @@ public class Messenger {
         User user = null;
         boolean flag = false;
         do{
-            user = new User ("dsrddd", "password1");
+            user = new User ("user1", "password1");
             flag = ValidateUser.checkUser(user);
             if (!flag) {
                 System.out.println("Invalid user");
@@ -33,26 +33,9 @@ public class Messenger {
 
     public static void main(String[] args) {
         Dialogs dialogs = new Dialogs();
-//        User user1 = getValidUser();
-//        User user2 = getValidUser();
         InputMessageFromKeyboard user1 = new InputMessageFromKeyboard(dialogs, getValidUser());
-        InputMessageFromKeyboard user2 = new InputMessageFromKeyboard(dialogs, getValidUser());
 
         user1.inputMessage();
         dialogs.history(new ConsoleSaver(System.out));
-
-
-//
-//        dialogs.addMessages(new Message(ifk.inputMessage(),user1, new Date()));
-//        dialogs.addMessages(new Message(ifk.inputMessage(),user2, new Date()));
-//        dialogs.addMessages(new Message(ifk.inputMessage(),user1, new Date()));
-//        dialogs.editMessages(user1, ifk.inputMessage());
-//
-//        dialogs.history(new ConsoleSaver(System.out));
-//        dialogs.history(new FileSaver(null));
-
-
-
-//        System.out.println(ifk.inputMessage());
     }
 }

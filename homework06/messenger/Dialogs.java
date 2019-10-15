@@ -7,6 +7,7 @@ import java.util.Date;
 public class Dialogs {
     private Message[] messages = new Message[0];
     private Message[] pendingMessages = new Message[0];
+    private Message[] allMessages = new Message[0];
 
 
     public void addMessages(Message message){
@@ -55,8 +56,16 @@ public class Dialogs {
     }
 
     public void history(IHistorySaver saver){
+
         for (Message message : this.messages) {
             saver.println(message.toString());
+        }
+
+        for (Message message : this.pendingMessages) {
+            System.out.println("История сообщений: ");
+            if ((message.getDate().getTime() + 60000) <= System.currentTimeMillis()){
+                saver.println(message.toString());
+            }
         }
 
     }
