@@ -1,8 +1,8 @@
 package homework04.dto;
 
 public class WordForSearch {
-    String wordForSearch;
-    int count;
+    private String wordForSearch;
+    private int count;
 
     public WordForSearch(String wordForSearch) {
         this.wordForSearch = wordForSearch;
