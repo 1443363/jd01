@@ -21,7 +21,7 @@ public class Messenger {
         User user = null;
         boolean flag = false;
         do{
-            user = new User ("user1", "password1");
+            user = new User ("dsrddd", "password1");
             flag = ValidateUser.checkUser(user);
             if (!flag) {
                 System.out.println("Invalid user");
@@ -31,22 +31,17 @@ public class Messenger {
     }
 
     public static void main(String[] args) {
-
-
-
         User user1 = getValidUser();
-
         User user2 = getValidUser();
 
+        System.out.println(getValidUser().getLogin());
 
+        Message message = new Message("first",user1, new Date());
         Dialogs dialogs = new Dialogs();
         dialogs.addMessages(new Message("first",user1, new Date()));
         dialogs.addMessages(new Message("sec",user2, new Date()));
         dialogs.addMessages(new Message("third",user1, new Date()));
-
-//        for (Message message:dialogs.getMessages()) {
-//            System.out.println(message);
-//            }
+        dialogs.editMessages(user1, "новый текст сообщения");
 
         dialogs.history(new ConsoleSaver(System.out));
         dialogs.history(new FileSaver(null));
