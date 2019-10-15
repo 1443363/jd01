@@ -1,6 +1,7 @@
 package homework06;
 
 import homework06.messenger.*;
+import homework06.messenger.input.InputMessageFromKeyboard;
 
 import java.util.Date;
 
@@ -31,19 +32,27 @@ public class Messenger {
     }
 
     public static void main(String[] args) {
-        User user1 = getValidUser();
-        User user2 = getValidUser();
-
-        System.out.println(getValidUser().getLogin());
-
-        Message message = new Message("first",user1, new Date());
         Dialogs dialogs = new Dialogs();
-        dialogs.addMessages(new Message("first",user1, new Date()));
-        dialogs.addMessages(new Message("sec",user2, new Date()));
-        dialogs.addMessages(new Message("third",user1, new Date()));
-        dialogs.editMessages(user1, "новый текст сообщения");
+//        User user1 = getValidUser();
+//        User user2 = getValidUser();
+        InputMessageFromKeyboard user1 = new InputMessageFromKeyboard(dialogs, getValidUser());
+        InputMessageFromKeyboard user2 = new InputMessageFromKeyboard(dialogs, getValidUser());
 
+        user1.inputMessage();
         dialogs.history(new ConsoleSaver(System.out));
-        dialogs.history(new FileSaver(null));
+
+
+//
+//        dialogs.addMessages(new Message(ifk.inputMessage(),user1, new Date()));
+//        dialogs.addMessages(new Message(ifk.inputMessage(),user2, new Date()));
+//        dialogs.addMessages(new Message(ifk.inputMessage(),user1, new Date()));
+//        dialogs.editMessages(user1, ifk.inputMessage());
+//
+//        dialogs.history(new ConsoleSaver(System.out));
+//        dialogs.history(new FileSaver(null));
+
+
+
+//        System.out.println(ifk.inputMessage());
     }
 }

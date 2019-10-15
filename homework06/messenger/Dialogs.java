@@ -6,9 +6,25 @@ import java.util.Date;
 
 public class Dialogs {
     private Message[] messages = new Message[0];
+    private Message[] pendingMessages = new Message[0];
+
 
     public void addMessages(Message message){
         this.addMessages(new Message[]{message});
+    }
+
+    public void addPendingMessages(Message pendingMessages){
+        this.addPendingMessages(new Message[]{pendingMessages});
+    }
+
+    public void addPendingMessages(Message[] pendingMessages){
+        if (pendingMessages != null && pendingMessages.length != 0) {
+            this.pendingMessages = Arrays.copyOf(this.pendingMessages, this.pendingMessages.length + pendingMessages.length);
+            int pendingMessagesLength = pendingMessages.length;
+            for (Message mes : pendingMessages) {
+                this.pendingMessages[this.pendingMessages.length - pendingMessagesLength--] = mes;
+            }
+        }
     }
 
     public void addMessages(Message[] messages){
