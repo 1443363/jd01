@@ -16,15 +16,13 @@ public class User {
     }
 
     public void setLogin() {
-        System.out.println("Введите логин пользователя, для подтверждения ввода логина введите \"enter\".");
+        System.out.println("Введите логин пользователя: ");
         Scanner scan = new Scanner(System.in);
         String input = "";
-        while (scan.hasNext() && !input.equalsIgnoreCase("enter")) {
+        while (scan.hasNext()) {
             input = scan.next();
-            if (!input.equalsIgnoreCase("enter")) {
-                this.login = input;
-                break;
-            } else break;
+            this.login = input;
+            break;
         }
     }
 
