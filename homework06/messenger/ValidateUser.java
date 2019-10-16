@@ -5,14 +5,10 @@ import java.util.regex.Pattern;
 
 public class ValidateUser {
     public static boolean checkUser(User user){
-        Pattern p = Pattern.compile("^[\\dА-яЁё!#\\\\]{1}[А-яЁё!#\\\\]+|[\\dA-Za-z]{0,4}");
-        Matcher m = p.matcher(user.getLogin());
-//        if(user.getLogin().matches("^[dА-яЁё!#\\\\]+"))
-//        {return false;} else {return true;}
-        while(m.find()) {
-            System.out.println("INCORRECT");
+        if (user.getLogin().matches("^[^А-яЁё\\d!#\\\\].+[^А-яЁё\\d!#\\\\]{4,}")) {
+            return true;
+        } else {
             return false;
         }
-        return true;
     }
 }
