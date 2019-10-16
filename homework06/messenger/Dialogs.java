@@ -56,6 +56,8 @@ public class Dialogs {
     }
 
     public void history(IHistorySaver saver){
+        System.out.println("История сообщений: ");
+
         if (messages != null && messages.length != 0) {
             this.messages = Arrays.copyOf(this.messages, this.messages.length + pendingMessages.length);
             int pendingMessagesLength = pendingMessages.length;
@@ -67,11 +69,9 @@ public class Dialogs {
         }
 
         for (Message message : this.messages) {
-            System.out.println("История сообщений: ");
-            saver.println(message.toString());
+            if(message != null) {
+                saver.println(message.toString());
+            }
         }
-
     }
-
-
 }
