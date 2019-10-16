@@ -39,20 +39,20 @@ public class Dialogs {
     }
 
     public void editMessages(User whoseMessage){
-        Date actualDate = new Date();
-
         for (int i = this.messages.length - 1; i >= 0; i--) {
-            if (this.messages[i].getUser().equals(whoseMessage)) {
-                if ((actualDate.getTime() - this.messages[i].getDate().getTime()) < 60000) {
+            if ((this.messages[i] != null) && (this.messages[i].getUser().equals(whoseMessage))) {
+                if ((System.currentTimeMillis() - this.messages[i].getDate().getTime()) < 60000) {
                     this.messages[i].setMessage("измененный текст");
                     System.out.println("Сообщение успешно отредактировано");
+                    break;
+                } else if ((System.currentTimeMillis() - this.messages[i].getDate().getTime()) > 60000) {
+                    System.out.println("Сообщение не может быть отредактировано. т.к. оно старше 1 минуты");
+                    break;
+                } else {
+                    System.out.println("Не было сообщений от юзера: " + whoseMessage.getLogin());
                 }
-                System.out.println("Сообщение не может быть отредактировано. т.к. оно старше 1 минуты");
-                break;
             }
         }
-
-        System.out.println("Не было сообщений от юзера: " + whoseMessage.getLogin());
     }
 
     public void history(IHistorySaver saver){
