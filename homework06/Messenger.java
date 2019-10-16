@@ -24,7 +24,7 @@ public class Messenger {
             user.setLogin();
             flag = ValidateUser.checkUser(user);
             if (!flag) {
-                System.out.println("Invalid login for user!");
+                System.out.println("Некорректный логин пользователя!");
             }
         } while (!flag);
         return user;
