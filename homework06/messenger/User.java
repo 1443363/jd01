@@ -1,13 +1,13 @@
 package homework06.messenger;
 
 import java.util.Objects;
+import java.util.Scanner;
 
 public class User {
     private String login;
     private String password;
 
-    public User(String login, String password){
-        this.login = login;
+    public User(String password){
         this.password = password;
     }
 
@@ -15,8 +15,17 @@ public class User {
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setLogin() {
+        System.out.println("Введите логин пользователя, для подтверждения ввода логина введите \"enter\".");
+        Scanner scan = new Scanner(System.in);
+        String input = "";
+        while (scan.hasNext() && !input.equalsIgnoreCase("enter")) {
+            input = scan.next();
+            if (!input.equalsIgnoreCase("enter")) {
+                this.login = input;
+                break;
+            } else break;
+        }
     }
 
     public String getPassword() {

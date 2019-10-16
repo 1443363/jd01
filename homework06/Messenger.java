@@ -18,11 +18,10 @@ public class Messenger {
      * 4. Можно отредактировать своё сообщение если оно не старше минуты
      * 5. Можно писать отложенные сообщения
      **/
-    public static User getValidUser(){
-        User user = null;
+    public static User getValidUser(User user){
         boolean flag = false;
         do{
-            user = new User ("login1", "password1");
+            user.setLogin();
             flag = ValidateUser.checkUser(user);
             if (!flag) {
                 System.out.println("Invalid login for user!");
@@ -32,9 +31,11 @@ public class Messenger {
     }
 
     public static void main(String[] args) {
-        User user1 = getValidUser();
+        User firstUser = new User("password1");
+        User secondUser = new User("password2");
+
         Dialogs dialogs = new Dialogs();
-        InputMessageFromKeyboard inputMessageFromKeyboard = new InputMessageFromKeyboard(dialogs, getValidUser());
+        InputMessageFromKeyboard inputMessageFromKeyboard = new InputMessageFromKeyboard(dialogs, getValidUser(firstUser));
         inputMessageFromKeyboard.inputMessage();
         dialogs.history(new ConsoleSaver(System.out));
         dialogs.editMessages(inputMessageFromKeyboard.getUser());
