@@ -38,13 +38,13 @@ public class Dialogs {
         }
     }
 
-    public void editMessages(User whoseMessage, String nexText){
+    public void editMessages(User whoseMessage){
         Date actualDate = new Date();
 
         for (int i = this.messages.length - 1; i >= 0; i--) {
             if (this.messages[i].getUser().equals(whoseMessage)) {
                 if ((actualDate.getTime() - this.messages[i].getDate().getTime()) < 60000) {
-                    this.messages[i].setMessage(nexText);
+                    this.messages[i].setMessage("измененный текст");
                     System.out.println("Сообщение успешно отредактировано");
                 }
                 System.out.println("Сообщение не может быть отредактировано. т.к. оно старше 1 минуты");
@@ -56,16 +56,19 @@ public class Dialogs {
     }
 
     public void history(IHistorySaver saver){
-
-        for (Message message : this.messages) {
-            saver.println(message.toString());
+        if (messages != null && messages.length != 0) {
+            this.messages = Arrays.copyOf(this.messages, this.messages.length + pendingMessages.length);
+            int pendingMessagesLength = pendingMessages.length;
+            for (Message mes : pendingMessages) {
+                if ((mes.getDate().getTime() + 60000) <= System.currentTimeMillis()) {
+                    this.messages[this.messages.length - pendingMessagesLength--] = mes;
+                }
+            }
         }
 
-        for (Message message : this.pendingMessages) {
+        for (Message message : this.messages) {
             System.out.println("История сообщений: ");
-            if ((message.getDate().getTime() + 60000) <= System.currentTimeMillis()){
-                saver.println(message.toString());
-            }
+            saver.println(message.toString());
         }
 
     }

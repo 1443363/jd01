@@ -55,4 +55,8 @@ public class InputMessageFromKeyboard implements IInputMessage{
             }
          }
     }
+
+    public User getUser() {
+        return user;
+    }
 }

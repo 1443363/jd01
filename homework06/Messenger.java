@@ -33,9 +33,10 @@ public class Messenger {
 
     public static void main(String[] args) {
         Dialogs dialogs = new Dialogs();
-        InputMessageFromKeyboard user1 = new InputMessageFromKeyboard(dialogs, getValidUser());
+        InputMessageFromKeyboard inputMessageFromKeyboard = new InputMessageFromKeyboard(dialogs, getValidUser());
+        dialogs.editMessages(inputMessageFromKeyboard.getUser());
 
-        user1.inputMessage();
+        inputMessageFromKeyboard.inputMessage();
         dialogs.history(new ConsoleSaver(System.out));
     }
 }
