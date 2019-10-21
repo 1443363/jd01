@@ -1,4 +1,4 @@
-package homework06.messenger;
+package homework06.messenger.saver;
 
 import java.io.File;
 

@@ -1,8 +1,8 @@
 package homework06.messenger;
 
+import homework06.messenger.saver.IHistorySaver;
+
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 
 public class Dialogs {
     private Message[] messages = new Message[0];
