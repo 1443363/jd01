@@ -7,7 +7,7 @@ import java.util.*;
 
 public class FilterApplicator<T> {
 
-    public <T> Collection<T> filter(Collection<T> collection, IFilter filter) {
+    public Collection<T> filter(Collection<T> collection, IFilter filter) {
         return filter.filter((Collection<Computer>)collection);
     }
 
