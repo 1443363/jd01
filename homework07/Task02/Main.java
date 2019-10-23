@@ -16,8 +16,10 @@ public class Main<T> {
         Collection<?> collection = filterApplicator.filter(CollectionsCreator.createComputersCollection(),
                 new FilterComputer());
 
-        System.out.println("Ниже будут отображены отфильтрованные элементы коллекции (те у которых RAM >= 50) : ");
-        collection.forEach(System.out::println);
+//        System.out.println("Ниже будут отображены отфильтрованные элементы коллекции (те у которых RAM >= 50) : ");
+//        collection.forEach(System.out::println);
+
+        CollectionsCreator.createStudentsCollection();
     }
 
 

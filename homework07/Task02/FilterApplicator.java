@@ -11,5 +11,7 @@ public class FilterApplicator<T> {
         return filter.filter((Collection<Computer>)collection);
     }
 
-
+//    public static Collection<? extends Comparable> sort(Collection<? extends Comparable> collection) {
+//
+//    }
 }
