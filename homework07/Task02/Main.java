@@ -13,13 +13,15 @@ public class Main<T> {
       из 10 элементов с типом "Computer" */
     public static void main(String[] args) {
         FilterApplicator filterApplicator = new FilterApplicator();
-        Collection<?> collection = filterApplicator.filter(CollectionsCreator.createComputersCollection(),
+        Collection<?> collection1 = filterApplicator.filter(CollectionsCreator.createComputersCollection(),
                 new FilterComputer());
 
 //        System.out.println("Ниже будут отображены отфильтрованные элементы коллекции (те у которых RAM >= 50) : ");
-//        collection.forEach(System.out::println);
+//        collection1.forEach(System.out::println);
 
-        CollectionsCreator.createStudentsCollection();
+        Collection<? extends Comparable> collection2 = filterApplicator.sort(CollectionsCreator.createStudentsCollection());
+          System.out.println("Ниже будут отображены отсортированные элементы коллекции (по году) : ");
+          collection2.forEach(System.out::println);
     }
 
 
