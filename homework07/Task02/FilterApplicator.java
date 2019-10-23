@@ -12,7 +12,7 @@ public class FilterApplicator<T> {
     }
 
     public static Collection<? extends Comparable> sort(Collection<? extends Comparable> collection) {
-        Collections.sort((List<Student>) collection);
+        Collections.sort((List<? extends Comparable>) collection);
         return collection;
     }
 }
