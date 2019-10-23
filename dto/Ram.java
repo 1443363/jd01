@@ -1,5 +1,7 @@
 package dto;
 
+import java.util.Objects;
+
 public class Ram {
     private int size;
 
