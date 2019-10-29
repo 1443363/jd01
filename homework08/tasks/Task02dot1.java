@@ -1,4 +1,4 @@
-package homework08;
+package homework08.tasks;
 
 import homework08.exceptions.DivideByZeroException_v1;
 

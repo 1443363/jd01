@@ -1,4 +1,4 @@
-package homework08;
+package homework08.tasks;
 
 import java.util.ArrayList;
 import java.util.Arrays;

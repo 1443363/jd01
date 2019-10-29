@@ -1,4 +1,4 @@
-package homework08;
+package homework08.tasks;
 
 public class Task01 {
     int a = 3, b = 0, c;

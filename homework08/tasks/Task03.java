@@ -1,4 +1,4 @@
-package homework08;
+package homework08.tasks;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Task03 {
     private int[] masOfInt = new int[1];
 
-    public void inputIntFromKeyaboard() {
+    public void inputIntFromKeyaboard() throws InterruptedException {
         int countOfMistakes = 2;
         int i = 0;
 
@@ -29,8 +29,9 @@ public class Task03 {
 
             throw new NumberFormatException("Было введено некорректное значение более трех раз!");
         } catch (NumberFormatException e) {
-            System.out.println("Введенные значения успешно записаны в массив!");
             e.printStackTrace();
+            Thread.sleep(1000);
+            System.out.println("Введенные значения успешно записаны в массив!");
         }
     }
 
