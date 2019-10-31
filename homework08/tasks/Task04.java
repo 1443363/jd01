@@ -8,7 +8,7 @@ import java.util.List;
 public class Task04 {
 
     public void parseAndSortMasInList(int[] masOfNumbers) {
-        List<Integer> listOfNumbers = new ArrayList<Integer>(masOfNumbers.length);
+        List<Integer> listOfNumbers = new ArrayList<>(masOfNumbers.length);
         for (int num: masOfNumbers) {
             listOfNumbers.add(num);
         }
