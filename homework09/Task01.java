@@ -1,0 +1,56 @@
+package homework09;
+
+import homework09.student.ComparatorID;
+import homework09.student.ComparatorName;
+import homework09.student.ComparatorValue;
+import homework09.student.Person;
+
+import java.io.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
+
+public class Task01 {
+
+
+    public static void main(String[] args) {
+        String[] masOfNames = {"Леша", "Миша", "Саша", "Антон", "Гена", "Дима", "Света", "Аня", "Оля",
+                "Соня", "Диана", "Вика"};
+        TreeMap<Integer, Person> students =  Stream.generate(() -> {int i = new Random().nextInt();
+            String name = masOfNames[(int)(Math.random() * 12)];
+            float score = (float)(Math.round((Math.random()*10) * 100.0) / 100.0);
+            return new Person(i, name, score);})
+                .limit(10_000)
+                .collect(Collectors.toMap(Person::getId, p -> p,(s1, s2) -> s1, TreeMap::new));
+
+        List<String> topStudents = new ArrayList<>();
+        students.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(new ComparatorValue().reversed()))
+                .limit(100)
+                .sorted(Map.Entry.comparingByValue(new ComparatorName()))
+                .forEach(p -> topStudents.add(p.getValue().toString()));
+
+
+        try {
+            FileOutputStream fos = new FileOutputStream("topStudentsFile.txt");
+            DataOutputStream outStream = new DataOutputStream(new BufferedOutputStream(fos));
+
+            for (String str: topStudents) {
+                outStream.writeUTF(str + "\n");
+            }
+
+            outStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        FileReader fileReader = new FileReader();
+        fileReader.read();
+
+    }
+
+}
