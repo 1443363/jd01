@@ -1,18 +1,14 @@
 package homework09;
 
-import homework09.student.ComparatorID;
+import homework09.reader.FileReader;
 import homework09.student.ComparatorName;
 import homework09.student.ComparatorValue;
 import homework09.student.Person;
 
 import java.io.*;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
 
 public class Task01 {
 
@@ -48,7 +44,7 @@ public class Task01 {
             e.printStackTrace();
         }
 
-        FileReader fileReader = new FileReader();
+        homework09.reader.FileReader fileReader = new FileReader();
         fileReader.read();
 
     }

@@ -25,6 +25,7 @@ public class CollectionsCreator{
         return computers;
     }
 
+    //Этим методом сосздаем коллекцию из 10 элементов с типо "Student"
     public static List<Student> createStudentsCollection() {
         List<Student> students = new ArrayList<>();
 

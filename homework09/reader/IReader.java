@@ -1,4 +1,4 @@
-package homework09;
+package homework09.reader;
 
 public interface IReader {
     void read();

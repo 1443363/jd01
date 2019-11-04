@@ -16,11 +16,13 @@ public class Main<T> {
         Collection<?> collection1 = filterApplicator.filter(CollectionsCreator.createComputersCollection(),
                 new FilterComputer());
 
-//        System.out.println("Ниже будут отображены отфильтрованные элементы коллекции (те у которых RAM >= 50) : ");
-//        collection1.forEach(System.out::println);
+        System.out.println("Ниже будут отображены отфильтрованные элементы " +
+                "коллекции компьютера(те у которых RAM >= 50) : ");
+        collection1.forEach(System.out::println);
 
-        Collection<? extends Comparable> collection2 = filterApplicator.sort(CollectionsCreator.createStudentsCollection());
-          System.out.println("Ниже будут отображены отсортированные элементы коллекции (по году) : ");
+        Collection<? extends Comparable> collection2 = filterApplicator.sort(CollectionsCreator.
+                createStudentsCollection());
+          System.out.println("Ниже будут отображены отсортированные элементы коллекции студента (по возрасту) : ");
           collection2.forEach(System.out::println);
     }
 
