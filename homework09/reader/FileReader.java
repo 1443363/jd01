@@ -10,8 +10,8 @@ import java.util.stream.Stream;
 
 public class FileReader implements IReader {
     @Override
-    public void read() {
-        try (Stream<String> stream = Files.lines(Paths.get("topStudentsFile.txt"))) {
+    public void read(String fileName) {
+        try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
             List<String> list = stream.collect(Collectors.toList());
             Collections.reverse(list);
             list.stream()

@@ -10,32 +10,38 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Task01 {
+public class FileCreator {
+    private String fileName = "";
 
+    public FileCreator(String fileName) {
+        this.fileName = fileName;
+    }
 
-    public static void main(String[] args) {
+    public void createFileOfTopStudents() {
         String[] masOfNames = {"Леша", "Миша", "Саша", "Антон", "Гена", "Дима", "Света", "Аня", "Оля",
                 "Соня", "Диана", "Вика"};
-        TreeMap<Integer, Person> students =  Stream.generate(() -> {int i = new Random().nextInt();
-            String name = masOfNames[(int)(Math.random() * 12)];
-            float score = (float)(Math.round((Math.random()*10) * 100.0) / 100.0);
-            return new Person(i, name, score);})
+        TreeMap<Integer, Person> students = Stream.generate(() -> {
+            int i = new Random().nextInt();
+            String name = masOfNames[(int) (Math.random() * 12)];
+            float score = (float) (Math.round((Math.random() * 10) * 100.0) / 100.0);
+            return new Person(i, name, score);
+        })
                 .limit(10_000)
-                .collect(Collectors.toMap(Person::getId, p -> p,(s1, s2) -> s1, TreeMap::new));
+                .collect(Collectors.toMap(Person::getId, p -> p, (s1, s2) -> s1, TreeMap::new));
 
         List<String> topStudents = new ArrayList<>();
+
         students.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(new ComparatorValue().reversed()))
                 .limit(100)
                 .sorted(Map.Entry.comparingByValue(new ComparatorName()))
                 .forEach(p -> topStudents.add(p.getValue().toString()));
 
-
         try {
-            FileOutputStream fos = new FileOutputStream("topStudentsFile.txt");
+            FileOutputStream fos = new FileOutputStream(this.fileName);
             DataOutputStream outStream = new DataOutputStream(new BufferedOutputStream(fos));
 
-            for (String str: topStudents) {
+            for (String str : topStudents) {
                 outStream.writeUTF(str + "\n");
             }
 
@@ -43,10 +49,13 @@ public class Task01 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        homework09.reader.FileReader fileReader = new FileReader();
-        fileReader.read();
-
     }
 
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
 }

@@ -1,5 +1,5 @@
 package homework09.reader;
 
 public interface IReader {
-    void read();
+   void read(String fileName);
 }
