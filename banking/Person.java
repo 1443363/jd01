@@ -38,16 +38,17 @@ public class Person {
         this.accounts = accounts;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Person person = (Person) o;
-        return id.equals(person.id);
+        Person person = ( Person ) o;
+        return Objects.equals(getId(), person.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(getId());
     }
 }

@@ -6,6 +6,7 @@ import java.util.*;
 public class Bank implements IBank{
     private final String name;
     private Map<Person, List<Account>> data = new HashMap<>();
+    private int transferOperations = 0;
 
     public Bank(String name) {
         this.name = name;
@@ -71,27 +72,67 @@ public class Bank implements IBank{
         }
     }
 
-//    public void transfer(final String idFrom, final String idTo, double sum){
-//        Person sender = null;
-//        Person receiver = null;
-//
-//        for (Person person : data.keySet()) {
-//            if (person.getId().equals(idFrom)){ sender = person;}
-//            else if (person.getId().equalsIgnoreCase(idTo)){ receiver = person; }
-//            else { throw new IllegalArgumentException("Получать или отправитель не является клиентом банка"); }
-//        }
-//
-//        synchronized (sender.getAccounts()){
-//            synchronized (receiver.getAccounts()){
-//                if(idFrom.getBalance() > sum){
-//                    idFrom.withdraw(sum);
-//                    idTo.deposit(sum);
-//                }
-//            }
-//        }
-//    }
+    public void transfer(final String idFrom, final String idTo, double sum){
+        Account accountFrom = null;
+        Account accountTo = null;
+        Person sender = null;
+        Person receiver = null;
+        double sumWithCom = 0;
 
-    public String getName() {
-        return name;
+        //получаем аккаунты из банка на основании id
+        for (List<Account> accounts : data.values()) {
+            for (Account account: accounts) {
+                if (account.getId().equalsIgnoreCase(idFrom)) {
+                    accountFrom = account;
+                } else if (account.getId().equalsIgnoreCase(idTo)) {
+                    accountTo = account;
+                }
+            }
+        }
+
+        //получаем персонов из банка на основании id
+        for(Map.Entry<Person, List<Account>> entry : data.entrySet()) {
+            if (entry.getValue().contains(accountFrom)) {
+                sender = entry.getKey();
+            }
+
+            if (entry.getValue().contains(accountTo)) {
+                receiver = entry.getKey();
+            }
+        }
+
+
+
+        if (accountFrom == null && accountTo == null) {
+            throw new IllegalArgumentException("Получать или отправитель не является клиентом банка");
+        }
+
+        synchronized (accountFrom){
+            synchronized (accountTo){
+                //сумма с коммиссией, в случае если пользователи разные
+                sumWithCom = Helper.sumWithCommision(sender, receiver, sum);
+                if(accountFrom.getBalance() >= sumWithCom){
+                    accountFrom.withdraw(sumWithCom);
+                    accountTo.deposit(sum);
+                    System.out.println("Количество проведенных операций: " + this.transferOperations++);
+                } else {
+                    throw new IllegalArgumentException("Недостаточно средств на аккаунте отправителя");
+                }
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        int accountsNum = 0;
+
+        for (List<Account> accounts : data.values()) {
+            for (Account account: accounts) {
+                accountsNum++;
+            }
+        }
+
+        return "Bank{" + "name ='" + name + '\'' + ", Persons = " + data.keySet().size() + " ," +
+                " Accounts = " + accountsNum + '}';
     }
 }

@@ -35,6 +35,8 @@ public class BankingApp {
         t3.start();
         t4.start();
 
+        System.out.println(bank.toString());
+
         while (true){
             try {
                 TimeUnit.SECONDS.sleep(1);
@@ -66,7 +68,7 @@ public class BankingApp {
                 Account acc1 = rnd.nextBoolean() ? account1 : account2;
                 Account acc2 = acc1.equals(account1) ? account2 : account1;
 
-                bank.transfer(acc1, acc2, rnd.nextDouble());
+                bank.transfer(acc1.getId(), acc2.getId(), rnd.nextDouble());
             }
         }
     }
