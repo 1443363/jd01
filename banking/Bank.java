@@ -78,6 +78,7 @@ public class Bank implements IBank{
         Person sender = null;
         Person receiver = null;
         double sumWithCom = 0;
+        int transfersCount = 0;
 
         //получаем аккаунты из банка на основании id
         for (List<Account> accounts : data.values()) {
@@ -120,6 +121,8 @@ public class Bank implements IBank{
                 }
             }
         }
+
+        transfersCount++;
     }
 
     @Override

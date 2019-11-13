@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 public class Account {
     private final String id;
     private double balance;
+    private Currency currency;
 
     public Account(String id) {
         this.id = id;
@@ -33,5 +34,9 @@ public class Account {
 
     public void withdraw(double sum){
         this.balance -= sum;
+    }
+
+    public Currency getCurrency() {
+        return currency;
     }
 }
