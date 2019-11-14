@@ -46,13 +46,14 @@ public class Helper {
 
     public static Person getPersonFromId(List<Person> peoples, String id) {
         //создаем рандомный аккаунт с таким же ид, т.к. equals переопределен на сравнение по id
-        Account acc = new Account(id, rnd.nextDouble());
         for (Person person: peoples) {
-            if (person.getAccounts().contains(acc)) {
-                return person;
+            for (Account account : person.getAccounts()) {
+                if (account.getId().equalsIgnoreCase(id)) {
+                    return person;
+                }
             }
         }
-        return null;
+        throw new IllegalArgumentException("Не найден искомый id среди существующих пользователей");
     }
 
     public static Account getAccountFromId(List<Person> peoples, String id) {

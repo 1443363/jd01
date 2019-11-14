@@ -52,7 +52,7 @@ public class BankingApp {
         add("Цептер Банк");
     }};
 
-    static List<String> names = new ArrayList<String>(){{
+    static Queue<String> names = new ConcurrentLinkedQueue<String>(){{
         add("Аарон");
         add("Абрам");
         add("Аваз");
@@ -112,10 +112,10 @@ public class BankingApp {
     }};
 
     final static List<Person> peoples = Stream.generate(() -> {
-        return new Person("MP" + rnd.nextInt(), names.get(names.size() - 1));
+        return new Person("MP" + rnd.nextInt(), names.poll());
     })
 //                .limit(100_000)
-            .limit(100)
+            .limit(10)
             .collect(Collectors.toList());
 
     public static void main(String[] args) {
@@ -128,14 +128,14 @@ public class BankingApp {
                 .limit(10)
                 .collect(Collectors.toList());
 
-        List<Person> peoples = Stream.generate(() -> {
-            return new Person("MP" + rnd.nextInt(), names.get(names.size() - 1));
-        })
-//                .limit(100_000)
-                .limit(100)
-                .collect(Collectors.toList());
+//        List<Person> peoples = Stream.generate(() -> {
+//            return new Person("MP" + rnd.nextInt(), names.get(names.size() - 1));
+//        })
+////                .limit(100_000)
+//                .limit(100)
+//                .collect(Collectors.toList());
 
-        peoples.parallelStream()
+        peoples.stream()
                 .filter(p -> rnd.nextBoolean())
                 .forEach(p -> {
                     int countCreate = rnd.nextInt(20) + 1;
@@ -179,11 +179,6 @@ public class BankingApp {
 //            executor.execute(new TransferTread(Helper.getRandomAccount(peoples), Helper.getRandomAccount(peoples), Helper.getRandomBank(banks)));
 //        }
 
-
-        System.out.println("--------------------");
-        System.out.println(account1.getId());
-        System.out.println(Helper.getPersonFromId(peoples, account1.getId()).toString());
-        System.out.println("112d1d12");
 
         Thread t1 = new Thread(new TransferTread(account1, account2, bank));
 //        Thread t2 = new Thread(new TransferTread(account1, account2, bank));
