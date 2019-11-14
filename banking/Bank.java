@@ -109,6 +109,14 @@ public class Bank implements IBank{
         //получаем персонов на основании id
         sender = Helper.getPersonFromId(BankingApp.peoples, idFrom);
         receiver = Helper.getPersonFromId(BankingApp.peoples, idFrom);
+        System.out.println("~~~~~~~~T~~~~~~~~~");
+        System.out.println("dsadas" + sender.toString());
+        System.out.println(receiver.toString());
+
+        //получаем аккаунты на основании id
+
+
+
         for(Map.Entry<Person, List<Account>> entry : data.entrySet()) {
             if (entry.getValue().contains(accountFrom)) {
                 sender = entry.getKey();

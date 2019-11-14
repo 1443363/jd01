@@ -183,6 +183,7 @@ public class BankingApp {
         System.out.println("--------------------");
         System.out.println(account1.getId());
         System.out.println(Helper.getPersonFromId(peoples, account1.getId()).toString());
+        System.out.println("112d1d12");
 
         Thread t1 = new Thread(new TransferTread(account1, account2, bank));
 //        Thread t2 = new Thread(new TransferTread(account1, account2, bank));

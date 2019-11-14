@@ -52,8 +52,21 @@ public class Helper {
                 return person;
             }
         }
+        return null;
+    }
+
+    public static Account getAccountFromId(List<Person> peoples, String id) {
+        //создаем рандомный аккаунт с таким же ид, т.к. equals переопределен на сравнение по id
+        Person person = getPersonFromId(BankingApp.peoples, id);
+        Account fakeAcc = new Account(id, rnd.nextDouble());
+        for (Account acc : person.getAccounts()) {
+            if (acc.equals(fakeAcc)) {
+                return acc;
+            }
+        }
         throw new IllegalArgumentException("Не найден пользователь с таким id");
     }
+
 
 //    public static void main(String[] args) {
 //        List<String> strings = new ArrayList<>();
