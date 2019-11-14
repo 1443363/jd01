@@ -114,8 +114,6 @@ public class Bank implements IBank{
             }
         }
 
-
-
         if (accountFrom == null && accountTo == null) {
             throw new IllegalArgumentException("Получать или отправитель не является клиентом банка");
         }

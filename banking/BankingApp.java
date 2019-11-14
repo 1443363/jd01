@@ -112,7 +112,7 @@ public class BankingApp {
     }};
 
     public static void main(String[] args) {
-        ExecutorService executor = Executors.newCachedThreadPool();
+        ExecutorService executor = Executors.newFixedThreadPool(4);
 
         List<Bank> banks = Stream.generate(() -> {
             return new Bank(namesOfBank.poll());
@@ -162,7 +162,7 @@ public class BankingApp {
         Account account2 = Helper.getRandomAccount(peoples);
         Bank bank = Helper.getRandomBank(banks);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             executor.execute(new TransferTread(account1, account2, bank));
         }
 
@@ -207,8 +207,8 @@ public class BankingApp {
             while (!Thread.currentThread().isInterrupted()){
                 Account acc1 = rnd.nextBoolean() ? account1 : account2;
                 Account acc2 = acc1.equals(account1) ? account2 : account1;
-
                 bank.transfer(acc1.getId(), acc2.getId(), rnd.nextDouble());
+                System.out.println("ТРАНСФЕР СОВЕРШЕН");
             }
         }
     }
