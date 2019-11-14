@@ -39,4 +39,9 @@ public class Account {
     public Currency getCurrency() {
         return currency;
     }
+
+    @Override
+    public String toString() {
+        return "Account{" + "id='" + id + '\'' + ", balance=" + balance + ", currency=" + currency + '}';
+    }
 }

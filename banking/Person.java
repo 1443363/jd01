@@ -34,10 +34,13 @@ public class Person {
         return accounts;
     }
 
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
+    public void setAccounts(Account account) {
+        this.accounts.add(account);
     }
 
+    public void setAccounts(List<Account> accounts) {
+        this.accounts.addAll(accounts);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -50,5 +53,10 @@ public class Person {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" + "id='" + id + '\'' + ", name='" + name + '\'' + ", accounts=" + accounts + '}';
     }
 }

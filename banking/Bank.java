@@ -27,7 +27,7 @@ public class Bank implements IBank{
         return account;
     }
 
-    private void addAccount(Person p, Account account) throws IllegalArgumentException{
+    private synchronized void addAccount(Person p, Account account){
         try {
             this.addClient(p);
         } catch (IllegalArgumentException ignored){
@@ -35,12 +35,25 @@ public class Bank implements IBank{
         }
         //TODO проверить что счета с таким номером в банке больше уже нет
         //Done!
-        List<Account> existingAccounts = new ArrayList<>();
-        data.forEach((k, v) -> existingAccounts.addAll(v));
+//        existingAccounts.addAll(v)
+//        List<Account> existingAccounts = new ArrayList<>();
+//
+//            for (Map.Entry<Person, List<Account>> entry : data.entrySet()) {
+//                existingAccounts.addAll(entry.getValue());
+//            }
 
-        if(!existingAccounts.contains(account)) {
+//        Iterator iterator = data.values().iterator();
+//
+//        while(iterator.hasNext()) {
+//            Object accounts = iterator.next();
+//            existingAccounts.add(accounts);
+//        }
+
+//        if(!existingAccounts.contains(account)) {
+        if(!Helper.isExistingAccount(data, account)) {
             List<Account> accounts = this.data.get(p);
             accounts.add(account);
+            p.setAccounts(account);
         } else {
             throw  new IllegalArgumentException("Такой счет уже есть в банке");
         }

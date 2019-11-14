@@ -112,28 +112,40 @@ public class BankingApp {
     }};
 
     public static void main(String[] args) {
-        Bank bank = new Bank("BankOfAmerica");
-
         ExecutorService executor = Executors.newCachedThreadPool();
 
         List<Bank> banks = Stream.generate(() -> {
             return new Bank(namesOfBank.poll());
         })
-                .limit(namesOfBank.size())
+//                .limit(namesOfBank.size())
+                .limit(10)
                 .collect(Collectors.toList());
 
         List<Person> peoples = Stream.generate(() -> {
             return new Person("MP" + rnd.nextInt(), names.get(names.size() - 1));
         })
-                .limit(100_000)
+//                .limit(100_000)
+                .limit(100)
                 .collect(Collectors.toList());
 
         peoples.parallelStream()
-                .filter(e -> rnd.nextBoolean())
-                .forEach(e -> {
+                .filter(p -> rnd.nextBoolean())
+                .forEach(p -> {
                     int countCreate = rnd.nextInt(20) + 1;
-                    bank.createAccountForPerson(e, rnd.nextDouble() * (rnd.nextInt(10_000) + 10));
+                    for (int i = 0; i < countCreate; i++) {
+                        Bank bank = Helper.getRandomBank(banks);
+                        bank.createAccountForPerson(p, rnd.nextDouble() * (rnd.nextInt(10_000) + 10));
+                    }
                 });
+
+
+
+//        banks.parallelStream()
+//                .filter(b -> rnd.nextBoolean())
+//                .forEach(b -> {
+//                    Person person = peoples.get(rnd.nextInt(peoples.size()));
+//                    person.setAccounts(b.getData().get(person));
+//                });
 
 
 
@@ -142,26 +154,27 @@ public class BankingApp {
         Person person3 = new Person("MP255_____3", "Света");
 
         List<Account> accounts = person1.getAccounts();
+//
+//        accounts.add(bank.createAccountForPerson(person1, 10_000d));
+//        accounts.add(bank.createAccountForPerson(person1, 10_000d));
 
-        accounts.add(bank.createAccountForPerson(person1, 10_000d));
-        accounts.add(bank.createAccountForPerson(person1, 10_000d));
-
-        Account account1 = accounts.get(0);
-        Account account2 = accounts.get(1);
+        Account account1 = Helper.getRandomAccount(peoples);
+        Account account2 = Helper.getRandomAccount(peoples);
+        Bank bank = Helper.getRandomBank(banks);
 
         for (int i = 0; i < 10; i++) {
             executor.execute(new TransferTread(account1, account2, bank));
         }
 
-        Thread t1 = new Thread(new TransferTread(account1, account2, bank));
-        Thread t2 = new Thread(new TransferTread(account1, account2, bank));
-        Thread t3 = new Thread(new TransferTread(account1, account2, bank));
-        Thread t4 = new Thread(new TransferTread(account1, account2, bank));
-
-        t1.start();
-        t2.start();
-        t3.start();
-        t4.start();
+//        Thread t1 = new Thread(new TransferTread(account1, account2, bank));
+//        Thread t2 = new Thread(new TransferTread(account1, account2, bank));
+//        Thread t3 = new Thread(new TransferTread(account1, account2, bank));
+//        Thread t4 = new Thread(new TransferTread(account1, account2, bank));
+//
+//        t1.start();
+//        t2.start();
+//        t3.start();
+//        t4.start();
 
         System.out.println(bank.toString());
 
