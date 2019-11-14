@@ -50,7 +50,7 @@ public class Bank implements IBank{
 //        }
 
 //        if(!existingAccounts.contains(account)) {
-        if(!Helper.isExistingAccount(data, account)) {
+        if(!Helper.isAccountExistInBank(this, account)) {
             List<Account> accounts = this.data.get(p);
             accounts.add(account);
             p.setAccounts(account);
@@ -91,19 +91,24 @@ public class Bank implements IBank{
         Person sender = null;
         Person receiver = null;
         double sumWithCom = 0;
+        System.out.println("ТРАНСФЕР НАЧАЛСЯ");
 
         //получаем аккаунты из банка на основании id
         for (List<Account> accounts : data.values()) {
             for (Account account: accounts) {
                 if (account.getId().equalsIgnoreCase(idFrom)) {
                     accountFrom = account;
+                    System.out.println("-----------------");
+                    System.out.println(accountFrom.getId());
                 } else if (account.getId().equalsIgnoreCase(idTo)) {
                     accountTo = account;
                 }
             }
         }
 
-        //получаем персонов из банка на основании id
+        //получаем персонов на основании id
+        sender = Helper.getPersonFromId(BankingApp.peoples, idFrom);
+        receiver = Helper.getPersonFromId(BankingApp.peoples, idFrom);
         for(Map.Entry<Person, List<Account>> entry : data.entrySet()) {
             if (entry.getValue().contains(accountFrom)) {
                 sender = entry.getKey();
@@ -113,10 +118,26 @@ public class Bank implements IBank{
                 receiver = entry.getKey();
             }
         }
+//        System.out.println("Sender" + sender.toString());
+//        System.out.println("Receiver" + receiver.toString());
+//        System.out.println("dsadsadsa");
+//
+//        while(accountFrom == null && accountTo == null) {
+//            try {
+//                throw new IllegalArgumentException("Получать или отправитель не является клиентом банка");
+//            }catch (IllegalArgumentException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
+        System.out.println("From" + accountFrom);
+        System.out.println("To" + accountTo);
         if (accountFrom == null && accountTo == null) {
             throw new IllegalArgumentException("Получать или отправитель не является клиентом банка");
         }
+
+        System.out.println("Sender" + sender.toString());
+        System.out.println("Receiver" + receiver.toString());
 
         synchronized (accountFrom){
             synchronized (accountTo){
@@ -131,6 +152,10 @@ public class Bank implements IBank{
                 }
             }
         }
+    }
+
+    public Map<Person, List<Account>> getData() {
+        return data;
     }
 
     @Override

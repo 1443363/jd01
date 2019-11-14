@@ -111,6 +111,13 @@ public class BankingApp {
         add("Ашот");
     }};
 
+    final static List<Person> peoples = Stream.generate(() -> {
+        return new Person("MP" + rnd.nextInt(), names.get(names.size() - 1));
+    })
+//                .limit(100_000)
+            .limit(100)
+            .collect(Collectors.toList());
+
     public static void main(String[] args) {
         ExecutorService executor = Executors.newFixedThreadPool(4);
 
@@ -146,32 +153,43 @@ public class BankingApp {
 //                    Person person = peoples.get(rnd.nextInt(peoples.size()));
 //                    person.setAccounts(b.getData().get(person));
 //                });
-
-
-
-        Person person1 = new Person("MP255_____1", "Илья");
-        Person person2 = new Person("MP255_____2", "Игорь");
-        Person person3 = new Person("MP255_____3", "Света");
-
-        List<Account> accounts = person1.getAccounts();
+//
+//
+//
+//        Person person1 = new Person("MP255_____1", "Илья");
+//        Person person2 = new Person("MP255_____2", "Игорь");
+//        Person person3 = new Person("MP255_____3", "Света");
+//
+//        List<Account> accounts = person1.getAccounts();
 //
 //        accounts.add(bank.createAccountForPerson(person1, 10_000d));
 //        accounts.add(bank.createAccountForPerson(person1, 10_000d));
-
-        Account account1 = Helper.getRandomAccount(peoples);
-        Account account2 = Helper.getRandomAccount(peoples);
         Bank bank = Helper.getRandomBank(banks);
 
-        for (int i = 0; i < 1; i++) {
-            executor.execute(new TransferTread(account1, account2, bank));
-        }
+        Account account1 = Helper.getRandomAccount(peoples);
 
-//        Thread t1 = new Thread(new TransferTread(account1, account2, bank));
+//        while(!Helper.isAccountExistInBank(bank, account1)) {
+//            account1 = Helper.getRandomAccount(peoples);
+//        }
+        Account account2 = Helper.getRandomAccount(peoples);
+//
+        System.out.println(account1.getBalance());
+        System.out.println(account2.getBalance());
+//        for (int i = 0; i < 3; i++) {
+//            executor.execute(new TransferTread(Helper.getRandomAccount(peoples), Helper.getRandomAccount(peoples), Helper.getRandomBank(banks)));
+//        }
+
+
+        System.out.println("--------------------");
+        System.out.println(account1.getId());
+        System.out.println(Helper.getPersonFromId(peoples, account1.getId()).toString());
+
+        Thread t1 = new Thread(new TransferTread(account1, account2, bank));
 //        Thread t2 = new Thread(new TransferTread(account1, account2, bank));
 //        Thread t3 = new Thread(new TransferTread(account1, account2, bank));
 //        Thread t4 = new Thread(new TransferTread(account1, account2, bank));
-//
-//        t1.start();
+
+        t1.start();
 //        t2.start();
 //        t3.start();
 //        t4.start();

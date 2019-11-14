@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Helper {
     static Random rnd = new Random();
+    final static int ds = 2;
 
     public static double sumWithCommision(Person p1, Person p2, double sum) {
         if (p1.equals(p2)) {
@@ -35,12 +36,23 @@ public class Helper {
         return randomBank;
     }
 
-    public static boolean isExistingAccount(Map<Person, List<Account>> data, Account account) {
+    public static boolean isAccountExistInBank(Bank bank, Account account) {
         List<Account> existingAccount = new ArrayList<>();
+        Map<Person, List<Account>> data = bank.getData();
         data.forEach((k, v) -> existingAccount.addAll(v));
 
         return existingAccount.contains(account);
+    }
 
+    public static Person getPersonFromId(List<Person> peoples, String id) {
+        //создаем рандомный аккаунт с таким же ид, т.к. equals переопределен на сравнение по id
+        Account acc = new Account(id, rnd.nextDouble());
+        for (Person person: peoples) {
+            if (person.getAccounts().contains(acc)) {
+                return person;
+            }
+        }
+        throw new IllegalArgumentException("Не найден пользователь с таким id");
     }
 
 //    public static void main(String[] args) {

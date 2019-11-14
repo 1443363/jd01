@@ -1,6 +1,7 @@
 package banking;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Account {
     private final String id;
@@ -38,6 +39,19 @@ public class Account {
 
     public Currency getCurrency() {
         return currency;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = ( Account ) o;
+        return Objects.equals(getId(), account.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 
     @Override
