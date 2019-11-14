@@ -4,14 +4,138 @@ import banking.Account;
 import banking.Bank;
 import banking.Person;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class BankingApp {
 
+    static Random rnd = new Random();
+
+    static Queue<String> namesOfBank = new ConcurrentLinkedQueue<String>(){{
+        add("Идея Банк");
+        add("Банк БелВЭБ");
+        add("Банк Решение");
+        add("Банк Дабрабыт");
+        add("Абсолютбанк");
+        add("Альфа-Банк");
+        add("БПС-Сбербанк");
+        add("БСБ Банк (БелСвиссБанк)");
+        add("БТА Банк");
+        add("ВТБ Беларусь");
+        add("БелГазпромБанк");
+        add("БелАгроПромБанк");
+        add("БеларусБанк");
+        add("БелИнвестБанк");
+        add("Белорусский Банк Малого Бизнеса");
+        add("Белорусский Народный Банк");
+        add("РРБ-Банк");
+        add("ИнтерПэйБанк");
+        add("Паритетбанк");
+        add("Национальный Банк Республики Беларусь");
+        add("ПриорБанк");
+        add("МТБанк");
+        add("Статусбанк (ЕвроТоргИнвестБанк)");
+        add("ФрансаБанк");
+        add("ТК Банк");
+        add("Хоум Кредит Банк");
+        add("ТехноБанк");
+        add("ЕвроБанк");
+        add("Дельта Банк");
+        add("Цептер Банк");
+    }};
+
+    static List<String> names = new ArrayList<String>(){{
+        add("Аарон");
+        add("Абрам");
+        add("Аваз");
+        add("Августин");
+        add("Авраам");
+        add("Агап");
+        add("Агапит");
+        add("Агат");
+        add("Агафон");
+        add("Адам");
+        add("Адриан");
+        add("Азамат");
+        add("Азат");
+        add("Азиз");
+        add("Айдар");
+        add("Айрат");
+        add("Акакий");
+        add("Аким");
+        add("Алан");
+        add("Александр");
+        add("Алексей");
+        add("Али");
+        add("Алик");
+        add("Алим");
+        add("Алихан");
+        add("Алишер");
+        add("Алмаз");
+        add("Альберт");
+        add("Амир");
+        add("Амирам");
+        add("Анар");
+        add("Анастасий");
+        add("Анатолий");
+        add("Анвар");
+        add("Ангел");
+        add("Андрей");
+        add("Анзор");
+        add("Антон");
+        add("Анфим");
+        add("Арам");
+        add("Аристарх");
+        add("Аркадий");
+        add("Арман");
+        add("Армен");
+        add("Арсен");
+        add("Арсений");
+        add("Арслан");
+        add("Артём");
+        add("Артемий");
+        add("Артур");
+        add("Архип");
+        add("Аскар");
+        add("Асхан");
+        add("Асхат");
+        add("Ахмет");
+        add("Ашот");
+    }};
+
     public static void main(String[] args) {
         Bank bank = new Bank("BankOfAmerica");
+
+        ExecutorService executor = Executors.newCachedThreadPool();
+
+        List<Bank> banks = Stream.generate(() -> {
+            return new Bank(namesOfBank.poll());
+        })
+                .limit(namesOfBank.size())
+                .collect(Collectors.toList());
+
+        List<Person> peoples = Stream.generate(() -> {
+            return new Person("MP" + rnd.nextInt(), names.get(names.size() - 1));
+        })
+                .limit(100_000)
+                .collect(Collectors.toList());
+
+        peoples.parallelStream()
+                .filter(e -> rnd.nextBoolean())
+                .forEach(e -> {
+                    int countCreate = rnd.nextInt(20) + 1;
+                    bank.createAccountForPerson(e, rnd.nextDouble() * (rnd.nextInt(10_000) + 10));
+                });
+
+
 
         Person person1 = new Person("MP255_____1", "Илья");
         Person person2 = new Person("MP255_____2", "Игорь");
@@ -24,6 +148,10 @@ public class BankingApp {
 
         Account account1 = accounts.get(0);
         Account account2 = accounts.get(1);
+
+        for (int i = 0; i < 10; i++) {
+            executor.execute(new TransferTread(account1, account2, bank));
+        }
 
         Thread t1 = new Thread(new TransferTread(account1, account2, bank));
         Thread t2 = new Thread(new TransferTread(account1, account2, bank));
@@ -54,7 +182,6 @@ public class BankingApp {
         private final Account account1;
         private final Account account2;
         private final Bank bank;
-        private Random rnd = new Random();
 
         private TransferTread(Account account1, Account account2, Bank bank) {
             this.account1 = account1;

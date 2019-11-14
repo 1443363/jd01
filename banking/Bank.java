@@ -78,7 +78,6 @@ public class Bank implements IBank{
         Person sender = null;
         Person receiver = null;
         double sumWithCom = 0;
-        int transfersCount = 0;
 
         //получаем аккаунты из банка на основании id
         for (List<Account> accounts : data.values()) {
@@ -115,14 +114,12 @@ public class Bank implements IBank{
                 if(accountFrom.getBalance() >= sumWithCom){
                     accountFrom.withdraw(sumWithCom);
                     accountTo.deposit(sum);
-                    System.out.println("Количество проведенных операций: " + this.transferOperations++);
+                    System.out.println("Для банка " + this.name + " было произведено операций: " + ++transferOperations);
                 } else {
                     throw new IllegalArgumentException("Недостаточно средств на аккаунте отправителя");
                 }
             }
         }
-
-        transfersCount++;
     }
 
     @Override
