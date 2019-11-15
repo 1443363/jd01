@@ -45,4 +45,17 @@ public class Account {
     public String toString() {
         return "Account{" + "id='" + id + '\'' + ", balance=" + balance + ", currency=" + currency + '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Account)) return false;
+        Account account = (Account) o;
+        return Objects.equals(getId(), account.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }

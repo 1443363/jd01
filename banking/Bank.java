@@ -7,6 +7,7 @@ public class Bank implements IBank{
     private final String name;
     private Map<Person, List<Account>> data = new HashMap<>();
     private int transferOperations = 0;
+    private boolean bankLock;
 
     public Bank(String name) {
         this.name = name;
@@ -86,76 +87,36 @@ public class Bank implements IBank{
     }
 
     public void transfer(final String idFrom, final String idTo, double sum){
-        Account accountFrom = null;
-        Account accountTo = null;
-        Person sender = null;
-        Person receiver = null;
+        Account accountFrom = Helper.getAccountFromId(idFrom);
+        Account accountTo = Helper.getAccountFromId(idTo);
+        Person sender = Helper.getPersonFromId(idFrom);
+        Person receiver = Helper.getPersonFromId(idTo);
         double sumWithCom = 0;
-        System.out.println("ТРАНСФЕР НАЧАЛСЯ");
 
-        //получаем аккаунты из банка на основании id
-        for (List<Account> accounts : data.values()) {
-            for (Account account: accounts) {
-                if (account.getId().equalsIgnoreCase(idFrom)) {
-                    accountFrom = account;
-                    System.out.println("-----------------");
-                    System.out.println(accountFrom.getId());
-                } else if (account.getId().equalsIgnoreCase(idTo)) {
-                    accountTo = account;
-                }
-            }
-        }
-
-        //получаем персонов на основании id
-        sender = Helper.getPersonFromId(BankingApp.peoples, idFrom);
-        receiver = Helper.getPersonFromId(BankingApp.peoples, idFrom);
-        System.out.println("~~~~~~~~T~~~~~~~~~");
-        System.out.println("dsadas" + sender.toString());
-        System.out.println(receiver.toString());
-
-        //получаем аккаунты на основании id
-
-
-
-        for(Map.Entry<Person, List<Account>> entry : data.entrySet()) {
-            if (entry.getValue().contains(accountFrom)) {
-                sender = entry.getKey();
-            }
-
-            if (entry.getValue().contains(accountTo)) {
-                receiver = entry.getKey();
-            }
-        }
-//        System.out.println("Sender" + sender.toString());
-//        System.out.println("Receiver" + receiver.toString());
-//        System.out.println("dsadsadsa");
-//
-//        while(accountFrom == null && accountTo == null) {
-//            try {
-//                throw new IllegalArgumentException("Получать или отправитель не является клиентом банка");
-//            }catch (IllegalArgumentException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-        System.out.println("From" + accountFrom);
-        System.out.println("To" + accountTo);
         if (accountFrom == null && accountTo == null) {
             throw new IllegalArgumentException("Получать или отправитель не является клиентом банка");
         }
-
-        System.out.println("Sender" + sender.toString());
-        System.out.println("Receiver" + receiver.toString());
-
         synchronized (accountFrom){
             synchronized (accountTo){
-                //сумма с коммиссией, в случае если пользователи разные
-                sumWithCom = Helper.sumWithCommision(sender, receiver, sum);
+                //сумма с коммиссией, в случае если пользователи разные или не принадлежат банку
+                sumWithCom = Helper.sumWithCommision(this, sender, receiver, sum);
+
+                if (accountFrom.getBalance() < sumWithCom) {
+                    
+                }
+
                 if(accountFrom.getBalance() >= sumWithCom){
                     accountFrom.withdraw(sumWithCom);
                     accountTo.deposit(sum);
+                    System.out.println("___________________");
+                    System.out.println("Баланс аккаунта отправителя:" + accountFrom.getBalance());
+                    System.out.println("Баланс аккаунта получателя: " + accountTo.getBalance());
+                    System.out.println("Сумма для перевода: " + sum);
+                    System.out.println("Сумма с учетом коммисии: " + sumWithCom);
+                    System.out.println("AVG: " + (accountFrom.getBalance() + accountTo.getBalance()) / 2);
                     System.out.println("Для банка " + this.name + " было произведено операций: " + ++transferOperations);
                 } else {
+                    bankLock = true;
                     throw new IllegalArgumentException("Недостаточно средств на аккаунте отправителя");
                 }
             }
@@ -164,6 +125,14 @@ public class Bank implements IBank{
 
     public Map<Person, List<Account>> getData() {
         return data;
+    }
+
+    public boolean isBankLock() {
+        return bankLock;
+    }
+
+    public int getTransferOperations() {
+        return transferOperations;
     }
 
     @Override

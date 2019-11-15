@@ -7,13 +7,15 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import static banking.BankingApp.peoples;
+
 
 public class Helper {
     static Random rnd = new Random();
     final static int ds = 2;
 
-    public static double sumWithCommision(Person p1, Person p2, double sum) {
-        if (p1.equals(p2)) {
+    public static double sumWithCommision(Bank bank, Person p1, Person p2, double sum) {
+        if ((p1.equals(p2)) && (bank.getData().containsKey(p1))) {
             return sum;
         }
 
@@ -44,8 +46,7 @@ public class Helper {
         return existingAccount.contains(account);
     }
 
-    public static Person getPersonFromId(List<Person> peoples, String id) {
-        //создаем рандомный аккаунт с таким же ид, т.к. equals переопределен на сравнение по id
+    public static Person getPersonFromId(String id) {
         for (Person person: peoples) {
             for (Account account : person.getAccounts()) {
                 if (account.getId().equalsIgnoreCase(id)) {
@@ -56,33 +57,14 @@ public class Helper {
         throw new IllegalArgumentException("Не найден искомый id среди существующих пользователей");
     }
 
-    public static Account getAccountFromId(List<Person> peoples, String id) {
-        //создаем рандомный аккаунт с таким же ид, т.к. equals переопределен на сравнение по id
-        Person person = getPersonFromId(BankingApp.peoples, id);
-        Account fakeAcc = new Account(id, rnd.nextDouble());
-        for (Account acc : person.getAccounts()) {
-            if (acc.equals(fakeAcc)) {
-                return acc;
+    public static Account getAccountFromId(String id) {
+        for (Person person: peoples) {
+            for (Account account : person.getAccounts()) {
+                if (account.getId().equalsIgnoreCase(id)) {
+                    return account;
+                }
             }
         }
         throw new IllegalArgumentException("Не найден пользователь с таким id");
     }
-
-
-//    public static void main(String[] args) {
-//        List<String> strings = new ArrayList<>();
-//        List<String> newStrings = new ArrayList<>();
-//
-//        strings.add("dsadas");
-//        strings.add("dsadas");
-//        strings.add("dsadas");
-//        strings.add("dsadas");
-//        newStrings.add("qqweqewqwe");
-//        newStrings.add("qqweqewqwe");
-//
-//        newStrings.addAll(strings);
-//
-//        System.out.println("string: " + strings.toString());
-//        System.out.println("newString: " + newStrings.toString());
-//    }
 }

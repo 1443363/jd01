@@ -1,17 +1,11 @@
 package banking;
 
-import banking.Account;
-import banking.Bank;
-import banking.Person;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -119,7 +113,7 @@ public class BankingApp {
             .collect(Collectors.toList());
 
     public static void main(String[] args) {
-        ExecutorService executor = Executors.newFixedThreadPool(4);
+        ExecutorService executor = Executors.newCachedThreadPool();
 
         List<Bank> banks = Stream.generate(() -> {
             return new Bank(namesOfBank.poll());
@@ -127,13 +121,6 @@ public class BankingApp {
 //                .limit(namesOfBank.size())
                 .limit(10)
                 .collect(Collectors.toList());
-
-//        List<Person> peoples = Stream.generate(() -> {
-//            return new Person("MP" + rnd.nextInt(), names.get(names.size() - 1));
-//        })
-////                .limit(100_000)
-//                .limit(100)
-//                .collect(Collectors.toList());
 
         peoples.stream()
                 .filter(p -> rnd.nextBoolean())
@@ -145,72 +132,19 @@ public class BankingApp {
                     }
                 });
 
-
-
-//        banks.parallelStream()
-//                .filter(b -> rnd.nextBoolean())
-//                .forEach(b -> {
-//                    Person person = peoples.get(rnd.nextInt(peoples.size()));
-//                    person.setAccounts(b.getData().get(person));
-//                });
-//
-//
-//
-//        Person person1 = new Person("MP255_____1", "Илья");
-//        Person person2 = new Person("MP255_____2", "Игорь");
-//        Person person3 = new Person("MP255_____3", "Света");
-//
-//        List<Account> accounts = person1.getAccounts();
-//
-//        accounts.add(bank.createAccountForPerson(person1, 10_000d));
-//        accounts.add(bank.createAccountForPerson(person1, 10_000d));
-        Bank bank = Helper.getRandomBank(banks);
-
-        Account account1 = Helper.getRandomAccount(peoples);
-
-//        while(!Helper.isAccountExistInBank(bank, account1)) {
-//            account1 = Helper.getRandomAccount(peoples);
+//        for (int i = 0; i < 4; i++) {
+            executor.execute(new TransferThread(Helper.getRandomAccount(peoples), Helper.getRandomAccount(peoples),
+                    Helper.getRandomBank(banks)));
 //        }
-        Account account2 = Helper.getRandomAccount(peoples);
-//
-        System.out.println(account1.getBalance());
-        System.out.println(account2.getBalance());
-//        for (int i = 0; i < 3; i++) {
-//            executor.execute(new TransferTread(Helper.getRandomAccount(peoples), Helper.getRandomAccount(peoples), Helper.getRandomBank(banks)));
-//        }
-
-
-        Thread t1 = new Thread(new TransferTread(account1, account2, bank));
-//        Thread t2 = new Thread(new TransferTread(account1, account2, bank));
-//        Thread t3 = new Thread(new TransferTread(account1, account2, bank));
-//        Thread t4 = new Thread(new TransferTread(account1, account2, bank));
-
-        t1.start();
-//        t2.start();
-//        t3.start();
-//        t4.start();
-
-        System.out.println(bank.toString());
-
-        while (true){
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-            double avg = (account1.getBalance() + account2.getBalance()) / 2;
-            System.out.println("Acc1 " + account1.getBalance());
-            System.out.println("Acc2 " + account2.getBalance());
-            System.out.println("AVG " + avg);
-        }
+        executor.shutdown();
     }
 
-    private static class TransferTread implements Runnable{
+    private static class TransferThread implements Runnable{
         private final Account account1;
         private final Account account2;
         private final Bank bank;
 
-        private TransferTread(Account account1, Account account2, Bank bank) {
+        private TransferThread(Account account1, Account account2, Bank bank) {
             this.account1 = account1;
             this.account2 = account2;
             this.bank = bank;
@@ -218,11 +152,11 @@ public class BankingApp {
 
         @Override
         public void run() {
-            while (!Thread.currentThread().isInterrupted()){
+            while (!bank.isBankLock()){
                 Account acc1 = rnd.nextBoolean() ? account1 : account2;
                 Account acc2 = acc1.equals(account1) ? account2 : account1;
-                bank.transfer(acc1.getId(), acc2.getId(), rnd.nextDouble());
-                System.out.println("ТРАНСФЕР СОВЕРШЕН");
+                bank.transfer(acc1.getId(), acc2.getId(), 10 + (500 - 10) * rnd.nextDouble());
+                System.out.println(bank.toString());
             }
         }
     }
