@@ -1,5 +1,7 @@
 package banking;
 
+import banking.additionals.Helper;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,6 +10,9 @@ public class Person {
     private final String id;
     private String name;
     private List<Account> accounts = new ArrayList<>();
+    private boolean isBankrupt;
+
+
 
     public Person(String id) {
         this.id = id;
@@ -42,6 +47,10 @@ public class Person {
         this.accounts.addAll(accounts);
     }
 
+    public void setBankrupt(boolean bankrupt) {
+        isBankrupt = bankrupt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,6 +66,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" + "id='" + id + '\'' + ", name='" + name + '\'' + ", accounts=" + accounts + '}';
+        return "Person{" + "id='" + id + '\'' + ", name='" + name + '\'' + ", balance='"
+                + Helper.getPersonBalance(this) + ", accounts=" + accounts + '}';
     }
 }

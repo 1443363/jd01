@@ -1,4 +1,4 @@
-package banking;
+package banking.additionals;
 
 public enum Currency {
     DOLLAR,

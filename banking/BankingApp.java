@@ -1,5 +1,8 @@
 package banking;
 
+import banking.additionals.Helper;
+import banking.banks.Bank;
+
 import java.util.List;
 import java.util.Queue;
 import java.util.Random;
@@ -105,7 +108,7 @@ public class BankingApp {
         add("Ашот");
     }};
 
-    final static List<Person> peoples = Stream.generate(() -> {
+    public final static List<Person> peoples = Stream.generate(() -> {
         return new Person("MP" + rnd.nextInt(), names.poll());
     })
 //                .limit(100_000)
@@ -156,7 +159,6 @@ public class BankingApp {
                 Account acc1 = rnd.nextBoolean() ? account1 : account2;
                 Account acc2 = acc1.equals(account1) ? account2 : account1;
                 bank.transfer(acc1.getId(), acc2.getId(), 10 + (500 - 10) * rnd.nextDouble());
-                System.out.println(bank.toString());
             }
         }
     }

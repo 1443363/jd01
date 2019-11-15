@@ -1,6 +1,7 @@
 package banking;
 
-import java.math.BigDecimal;
+import banking.additionals.Currency;
+
 import java.util.Objects;
 
 public class Account {
@@ -34,7 +35,15 @@ public class Account {
     }
 
     public void withdraw(double sum){
-        this.balance -= sum;
+        if (sum < balance) {
+            this.balance -= sum;
+        } else {
+            try {
+                throw new IllegalArgumentException("На счету недостаточно средств");
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public Currency getCurrency() {

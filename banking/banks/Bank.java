@@ -1,9 +1,12 @@
-package banking;
+package banking.banks;
 
-import java.math.BigDecimal;
+import banking.Account;
+import banking.additionals.Helper;
+import banking.Person;
+
 import java.util.*;
 
-public class Bank implements IBank{
+public class Bank implements IBank {
     private final String name;
     private Map<Person, List<Account>> data = new HashMap<>();
     private int transferOperations = 0;
@@ -36,21 +39,6 @@ public class Bank implements IBank{
         }
         //TODO проверить что счета с таким номером в банке больше уже нет
         //Done!
-//        existingAccounts.addAll(v)
-//        List<Account> existingAccounts = new ArrayList<>();
-//
-//            for (Map.Entry<Person, List<Account>> entry : data.entrySet()) {
-//                existingAccounts.addAll(entry.getValue());
-//            }
-
-//        Iterator iterator = data.values().iterator();
-//
-//        while(iterator.hasNext()) {
-//            Object accounts = iterator.next();
-//            existingAccounts.add(accounts);
-//        }
-
-//        if(!existingAccounts.contains(account)) {
         if(!Helper.isAccountExistInBank(this, account)) {
             List<Account> accounts = this.data.get(p);
             accounts.add(account);
@@ -92,6 +80,7 @@ public class Bank implements IBank{
         Person sender = Helper.getPersonFromId(idFrom);
         Person receiver = Helper.getPersonFromId(idTo);
         double sumWithCom = 0;
+        boolean transferMade = false;
 
         if (accountFrom == null && accountTo == null) {
             throw new IllegalArgumentException("Получать или отправитель не является клиентом банка");
@@ -101,24 +90,46 @@ public class Bank implements IBank{
                 //сумма с коммиссией, в случае если пользователи разные или не принадлежат банку
                 sumWithCom = Helper.sumWithCommision(this, sender, receiver, sum);
 
-                if (accountFrom.getBalance() < sumWithCom) {
-                    
+                for (int i = 0; i < 20; i++) {
+                    if (accountFrom.getBalance() >= sumWithCom) {
+                        accountFrom.withdraw(sumWithCom);
+                        accountTo.deposit(sum);
+                        System.out.println("___________________");
+                        System.out.println("Баланс аккаунта отправителя:" + accountFrom.getBalance());
+                        System.out.println("Баланс аккаунта получателя: " + accountTo.getBalance());
+                        System.out.println("Сумма для перевода: " + sum);
+                        System.out.println("Сумма с учетом коммисии: " + sumWithCom);
+                        System.out.println("AVG: " + (accountFrom.getBalance() + accountTo.getBalance()) / 2);
+                        System.out.println("Для банка " + this.name + " было произведено операций: " + ++transferOperations);
+                        System.out.println(this.toString());
+                        transferMade = true;
+                        break;
+                    } else {
+                        for (Account account : sender.getAccounts()) {
+                            if (account.getBalance() >= sumWithCom) {
+                                System.out.println("Был использован другой аккаунт отправителя, т.к. на выбранному недостаточно средств");
+                                accountFrom.withdraw(sumWithCom);
+                                accountTo.deposit(sum);
+                                System.out.println("___________________");
+                                System.out.println("Баланс аккаунта отправителя:" + accountFrom.getBalance());
+                                System.out.println("Баланс аккаунта получателя: " + accountTo.getBalance());
+                                System.out.println("Сумма для перевода: " + sum);
+                                System.out.println("Сумма с учетом коммисии: " + sumWithCom);
+                                System.out.println("AVG: " + (accountFrom.getBalance() + accountTo.getBalance()) / 2);
+                                System.out.println("Для банка " + this.name + " было произведено операций: " + ++transferOperations);
+                                System.out.println(this.toString());
+                                transferMade = true;
+                                break;
+                            }
+                        }
+                        if (!transferMade) {
+                            sender.setBankrupt(true);
+                        }
+                        bankLock = true;
+                        throw new IllegalArgumentException("Недостаточно средств на аккаунте отправителя");
+                    }
                 }
 
-                if(accountFrom.getBalance() >= sumWithCom){
-                    accountFrom.withdraw(sumWithCom);
-                    accountTo.deposit(sum);
-                    System.out.println("___________________");
-                    System.out.println("Баланс аккаунта отправителя:" + accountFrom.getBalance());
-                    System.out.println("Баланс аккаунта получателя: " + accountTo.getBalance());
-                    System.out.println("Сумма для перевода: " + sum);
-                    System.out.println("Сумма с учетом коммисии: " + sumWithCom);
-                    System.out.println("AVG: " + (accountFrom.getBalance() + accountTo.getBalance()) / 2);
-                    System.out.println("Для банка " + this.name + " было произведено операций: " + ++transferOperations);
-                } else {
-                    bankLock = true;
-                    throw new IllegalArgumentException("Недостаточно средств на аккаунте отправителя");
-                }
             }
         }
     }
@@ -146,6 +157,6 @@ public class Bank implements IBank{
         }
 
         return "Bank{" + "name ='" + name + '\'' + ", Persons = " + data.keySet().size() + " ," +
-                " Accounts = " + accountsNum + '}';
+                " Accounts = " + accountsNum + ", BankBalance = " + Helper.getBankBalance(this) +'}';
     }
 }

@@ -1,11 +1,13 @@
-package banking;
+package banking.additionals;
 
-import java.sql.Time;
+import banking.Account;
+import banking.Person;
+import banking.banks.Bank;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import static banking.BankingApp.peoples;
 
@@ -66,5 +68,24 @@ public class Helper {
             }
         }
         throw new IllegalArgumentException("Не найден пользователь с таким id");
+    }
+
+    public static double getBankBalance(Bank bank) {
+        double bankBalance = 0.0;
+
+        for (List<Account> accounts : bank.getData().values()) {
+            bankBalance += accounts.stream().
+                    mapToDouble(Account::getBalance).
+                    sum();
+        }
+        return bankBalance;
+    }
+
+    public static double getPersonBalance(Person person) {
+        double personBalance = person.getAccounts().stream()
+                .mapToDouble(Account::getBalance)
+                .sum();
+
+        return personBalance;
     }
 }
