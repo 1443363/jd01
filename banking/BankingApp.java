@@ -111,19 +111,20 @@ public class BankingApp {
     public final static List<Person> peoples = Stream.generate(() -> {
         return new Person("MP" + rnd.nextInt(), names.poll());
     })
-//                .limit(100_000)
+                .limit(10_000)
+            .collect(Collectors.toList());
+
+    public final static List<Bank> banks = Stream.generate(() -> {
+        return new Bank(namesOfBank.poll());
+    })
+//            .limit(namesOfBank.size())
             .limit(10)
             .collect(Collectors.toList());
 
     public static void main(String[] args) {
         ExecutorService executor = Executors.newCachedThreadPool();
 
-        List<Bank> banks = Stream.generate(() -> {
-            return new Bank(namesOfBank.poll());
-        })
-//                .limit(namesOfBank.size())
-                .limit(10)
-                .collect(Collectors.toList());
+
 
         peoples.stream()
                 .filter(p -> rnd.nextBoolean())
@@ -135,11 +136,20 @@ public class BankingApp {
                     }
                 });
 
-//        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             executor.execute(new TransferThread(Helper.getRandomAccount(peoples), Helper.getRandomAccount(peoples),
                     Helper.getRandomBank(banks)));
-//        }
+        }
         executor.shutdown();
+
+        try {
+            Thread.sleep(4_000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Helper.viewBanksTop10Balance();
+        Helper.viewBanksTop10Transfers();
     }
 
     private static class TransferThread implements Runnable{

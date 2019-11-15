@@ -157,6 +157,7 @@ public class Bank implements IBank {
         }
 
         return "Bank{" + "name ='" + name + '\'' + ", Persons = " + data.keySet().size() + " ," +
-                " Accounts = " + accountsNum + ", BankBalance = " + Helper.getBankBalance(this) +'}';
+                " Accounts = " + accountsNum + ", BankBalance = " + Helper.getBankBalance(this)
+                + ", TransferOperations = " + getTransferOperations() +'}';
     }
 }

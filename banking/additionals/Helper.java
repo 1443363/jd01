@@ -1,13 +1,15 @@
 package banking.additionals;
 
 import banking.Account;
+import banking.BankingApp;
 import banking.Person;
 import banking.banks.Bank;
+import banking.comparators.ComparatorBankBalance;
+import banking.comparators.ComparatorBankOperations;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.sql.SQLOutput;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static banking.BankingApp.peoples;
 
@@ -87,5 +89,35 @@ public class Helper {
                 .sum();
 
         return personBalance;
+    }
+
+    public static void viewBanksTop10Balance() {
+        List<Bank> banks = new ArrayList<>(BankingApp.banks);
+        List<Bank> top10Banks = new ArrayList<>();
+
+        top10Banks = banks.stream()
+                .sorted(new ComparatorBankBalance())
+                .limit(10)
+                .collect(Collectors.toList());
+
+        Collections.reverse(top10Banks);
+        System.out.println("Ниже приведен список топ 10 банков по балансу: ");
+        System.out.println(top10Banks.toString());
+    }
+
+    public static void viewBanksTop10Transfers() {
+        List<Bank> banks = new ArrayList<>(BankingApp.banks);
+        List<Bank> top10Banks = new ArrayList<>();
+
+
+        top10Banks = banks.stream()
+                .sorted(new ComparatorBankOperations())
+                .limit(10)
+                .collect(Collectors.toList());
+
+        Collections.reverse(top10Banks);
+        System.out.println("Ниже приведен список топ 10 банков по проведенным операциям: ");
+        System.out.println(top10Banks.toString());
+
     }
 }
