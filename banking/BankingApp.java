@@ -150,6 +150,9 @@ public class BankingApp {
 
         Helper.viewBanksTop10Balance();
         Helper.viewBanksTop10Transfers();
+
+        Helper.banksToFile();
+        Helper.personsToFile();
     }
 
     private static class TransferThread implements Runnable{

@@ -6,11 +6,19 @@ import banking.Person;
 import banking.banks.Bank;
 import banking.comparators.ComparatorBankBalance;
 import banking.comparators.ComparatorBankOperations;
+import homework04.dto.File;
 
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLOutput;
+import java.text.Format;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static banking.BankingApp.banks;
 import static banking.BankingApp.peoples;
 
 
@@ -118,6 +126,31 @@ public class Helper {
         Collections.reverse(top10Banks);
         System.out.println("Ниже приведен список топ 10 банков по проведенным операциям: ");
         System.out.println(top10Banks.toString());
-
     }
+
+
+    public static void banksToFile() {
+        try(FileOutputStream fileOut = new FileOutputStream("listOfBanks.txt");
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);){
+
+            for (Bank bank : banks) {
+                objectOut.writeObject(bank.toString() + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void personsToFile() {
+        try(FileOutputStream fileOut = new FileOutputStream("listOfPersons.txt");
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);){
+
+            for (Person person : peoples) {
+                objectOut.writeObject(person.toString() + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
