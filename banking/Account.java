@@ -16,6 +16,7 @@ public class Account {
     public Account(String id, double balance, Currency currency) {
         this.id = id;
         this.balance = balance;
+        this.currency = currency;
     }
 
     public String getId() {

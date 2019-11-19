@@ -112,7 +112,7 @@ public class BankingApp {
     public final static List<Person> peoples = Stream.generate(() -> {
         return new Person("MP" + rnd.nextInt(), names.poll());
     })
-                .limit(10_000)
+                .limit(10_00)
             .collect(Collectors.toList());
 
     public final static List<Bank> banks = Stream.generate(() -> {

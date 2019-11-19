@@ -11,6 +11,7 @@ public class Bank implements IBank {
     private final String name;
     private Map<Person, List<Account>> data = new HashMap<>();
     private int transferOperations = 0;
+    private double balanceFromOperations;
     private boolean bankLock;
 
     public Bank(String name) {
@@ -80,6 +81,7 @@ public class Bank implements IBank {
         Person sender = Helper.getPersonFromId(idFrom);
         Person receiver = Helper.getPersonFromId(idTo);
         double sumWithCom = 0;
+        double sumAfterConvertation = 0;
         boolean transferMade = false;
 
         if (accountFrom == null && accountTo == null) {
@@ -88,35 +90,49 @@ public class Bank implements IBank {
         synchronized (accountFrom){
             synchronized (accountTo){
                 //сумма с коммиссией, в случае если пользователи разные или не принадлежат банку
-                sumWithCom = Helper.sumWithCommision(this, sender, receiver, sum);
+                sumAfterConvertation = Helper.convertSum(accountFrom, accountTo, sum);
+                sumWithCom = Helper.sumWithCommision(this, sender, receiver, sumAfterConvertation);
 
                 for (int i = 0; i < 20; i++) {
                     if (accountFrom.getBalance() >= sumWithCom) {
                         accountFrom.withdraw(sumWithCom);
-                        accountTo.deposit(sum);
+                        accountTo.deposit(sumAfterConvertation);
                         System.out.println("___________________");
-                        System.out.println("Баланс аккаунта отправителя:" + accountFrom.getBalance());
-                        System.out.println("Баланс аккаунта получателя: " + accountTo.getBalance());
-                        System.out.println("Сумма для перевода: " + sum);
-                        System.out.println("Сумма с учетом коммисии: " + sumWithCom);
-                        System.out.println("AVG: " + (accountFrom.getBalance() + accountTo.getBalance()) / 2);
-                        System.out.println("Для банка " + this.name + " было произведено операций: " + ++transferOperations);
+                        System.out.println("Баланс аккаунта отправителя:" + accountFrom.getBalance() + " " +
+                                accountFrom.getCurrency());
+                        System.out.println("Баланс аккаунта получателя: " + accountTo.getBalance() + " " +
+                                accountFrom.getCurrency());
+                        System.out.println("Сумма для перевода: " + sumAfterConvertation + " " +
+                                accountFrom.getCurrency());
+                        System.out.println("Сумма с учетом коммисии: " + sumWithCom + " " +
+                                accountFrom.getCurrency());
+                        System.out.println("AVG: " + (accountFrom.getBalance() + accountTo.getBalance()) / 2 + " " +
+                                accountFrom.getCurrency());
+                        System.out.println("Для банка " + this.name + " было произведено операций: " +
+                                "" + ++transferOperations);
                         System.out.println(this.toString());
                         transferMade = true;
                         break;
                     } else {
                         for (Account account : sender.getAccounts()) {
                             if (account.getBalance() >= sumWithCom) {
-                                System.out.println("Был использован другой аккаунт отправителя, т.к. на выбранному недостаточно средств");
+                                System.out.println("Был использован другой аккаунт отправителя, т.к. на " +
+                                        "выбранному недостаточно средств");
                                 accountFrom.withdraw(sumWithCom);
-                                accountTo.deposit(sum);
+                                accountTo.deposit(sumAfterConvertation);
                                 System.out.println("___________________");
-                                System.out.println("Баланс аккаунта отправителя:" + accountFrom.getBalance());
-                                System.out.println("Баланс аккаунта получателя: " + accountTo.getBalance());
-                                System.out.println("Сумма для перевода: " + sum);
-                                System.out.println("Сумма с учетом коммисии: " + sumWithCom);
-                                System.out.println("AVG: " + (accountFrom.getBalance() + accountTo.getBalance()) / 2);
-                                System.out.println("Для банка " + this.name + " было произведено операций: " + ++transferOperations);
+                                System.out.println("Баланс аккаунта отправителя:" + accountFrom.getBalance() + " " +
+                                        accountFrom.getCurrency());
+                                System.out.println("Баланс аккаунта получателя: " + accountTo.getBalance() + " " +
+                                        accountFrom.getCurrency());
+                                System.out.println("Сумма для перевода: " + sumAfterConvertation + " " +
+                                        accountFrom.getCurrency());
+                                System.out.println("Сумма с учетом коммисии: " + sumWithCom + " " +
+                                        accountFrom.getCurrency());
+                                System.out.println("AVG: " + (accountFrom.getBalance() + accountTo.getBalance()) / 2
+                                        + " " + accountFrom.getCurrency());
+                                System.out.println("Для банка " + this.name + " было произведено операций: " +
+                                        "" + ++transferOperations);
                                 System.out.println(this.toString());
                                 transferMade = true;
                                 break;
@@ -132,6 +148,14 @@ public class Bank implements IBank {
 
             }
         }
+    }
+
+    public double getBalanceFromOperations() {
+        return balanceFromOperations;
+    }
+
+    public void setBalanceFromOperations(double balanceFromOperations) {
+        this.balanceFromOperations = balanceFromOperations;
     }
 
     public Map<Person, List<Account>> getData() {
@@ -158,6 +182,6 @@ public class Bank implements IBank {
 
         return "Bank{" + "name ='" + name + '\'' + ", Persons = " + data.keySet().size() + " ," +
                 " Accounts = " + accountsNum + ", BankBalance = " + Helper.getBankBalance(this)
-                + ", TransferOperations = " + getTransferOperations() +'}';
+                + " USD, TransferOperations = " + getTransferOperations() +'}';
     }
 }

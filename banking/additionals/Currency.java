@@ -6,11 +6,9 @@ import java.util.List;
 import java.util.Random;
 
 public enum Currency {
-    DOLLAR,
+    USD,
     EUR,
-    RUB,
-    POUNDS,
-    TENGE;
+    BYR;
 
     private static final List<Currency> VALUES =
             Collections.unmodifiableList(Arrays.asList(values()));
