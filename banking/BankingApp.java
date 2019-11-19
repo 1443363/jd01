@@ -4,6 +4,7 @@ import banking.additionals.Currency;
 import banking.additionals.Helper;
 import banking.banks.Bank;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Random;
@@ -14,7 +15,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class BankingApp {
-
     static Random rnd = new Random();
 
     static Queue<String> namesOfBank = new ConcurrentLinkedQueue<String>(){{
@@ -50,7 +50,7 @@ public class BankingApp {
         add("Цептер Банк");
     }};
 
-    static Queue<String> names = new ConcurrentLinkedQueue<String>(){{
+    static List<String> names = new ArrayList<>(){{
         add("Аарон");
         add("Абрам");
         add("Аваз");
@@ -110,7 +110,7 @@ public class BankingApp {
     }};
 
     public final static List<Person> peoples = Stream.generate(() -> {
-        return new Person("MP" + rnd.nextInt(), names.poll());
+        return new Person("MP" + rnd.nextInt(), names.get(rnd.nextInt(names.size())));
     })
                 .limit(10_00)
             .collect(Collectors.toList());
@@ -123,6 +123,7 @@ public class BankingApp {
             .collect(Collectors.toList());
 
     public static void main(String[] args) {
+        Helper.readPersonsFromFile();
         ExecutorService executor = Executors.newCachedThreadPool();
 
 
@@ -154,7 +155,7 @@ public class BankingApp {
         Helper.viewBanksTop10Transfers();
 
         Helper.banksToFile();
-        Helper.personsToFile();
+        Helper.writePersonsToFile();
     }
 
     private static class TransferThread implements Runnable{

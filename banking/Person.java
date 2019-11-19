@@ -66,7 +66,13 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" + "id='" + id + '\'' + ", name='" + name + '\'' + ", balance='"
+        return "Person{" + "id='" + id + '\'' + ", name='" + this.name + '\'' + ", balance='"
                 + Helper.getPersonBalance(this) + ", accounts=" + accounts + '}';
     }
+
+
+//    @Override
+//    public String toString() {
+//        return "Person{" + "id='" + id + '\'' + ", name='" + name + '\'' + ", accounts=" + accounts + ", isBankrupt=" + isBankrupt + '}';
+//    }
 }

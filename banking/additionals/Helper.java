@@ -8,10 +8,7 @@ import banking.comparators.ComparatorBankBalance;
 import banking.comparators.ComparatorBankOperations;
 import homework04.dto.File;
 
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLOutput;
 import java.text.Format;
@@ -85,7 +82,7 @@ public class Helper {
         throw new IllegalArgumentException("Не найден пользователь с таким id");
     }
 
-    //Баланс банка в USD Currency
+    //Баланс банка в валюте USD
     public static double getBankBalance(Bank bank) {
         double bankBalance = 0.0;
 
@@ -139,7 +136,7 @@ public class Helper {
         }
     }
 
-    public static void personsToFile() {
+    public static void writePersonsToFile() {
         try (FileOutputStream fileOut = new FileOutputStream("listOfPersons.txt");
              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);) {
 
@@ -149,6 +146,20 @@ public class Helper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void readPersonsFromFile() {
+        try (FileInputStream fileIn = new FileInputStream("listOfPersons.txt");
+             ObjectInputStream objectIn = new ObjectInputStream(fileIn);) {
+
+            Person person = (Person) objectIn.readObject();
+            System.out.println("DSADAS!!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(person.toString());
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     public static double convertSum(Account accountFrom, Account accountTo, double sum) {

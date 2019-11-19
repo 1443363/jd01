@@ -117,7 +117,7 @@ public class Bank implements IBank {
                         for (Account account : sender.getAccounts()) {
                             if (account.getBalance() >= sumWithCom) {
                                 System.out.println("Был использован другой аккаунт отправителя, т.к. на " +
-                                        "выбранному недостаточно средств");
+                                        "выбранном аккаунте недостаточно средств");
                                 accountFrom.withdraw(sumWithCom);
                                 accountTo.deposit(sumAfterConvertation);
                                 System.out.println("___________________");
