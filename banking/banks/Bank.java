@@ -1,6 +1,7 @@
 package banking.banks;
 
 import banking.Account;
+import banking.additionals.Currency;
 import banking.additionals.Helper;
 import banking.Person;
 
@@ -24,10 +25,9 @@ public class Bank implements IBank {
         }
     }
 
-    public Account createAccountForPerson(Person p, double startAmount){
-        Account account = new Account(UUID.randomUUID().toString(), startAmount);
+    public Account createAccountForPerson(Person p, double startAmount, Currency currency){
+        Account account = new Account(UUID.randomUUID().toString(), startAmount, currency);
         addAccount(p, account);
-
         return account;
     }
 

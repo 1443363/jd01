@@ -1,5 +1,6 @@
 package banking;
 
+import banking.additionals.Currency;
 import banking.additionals.Helper;
 import banking.banks.Bank;
 
@@ -132,7 +133,8 @@ public class BankingApp {
                     int countCreate = rnd.nextInt(20) + 1;
                     for (int i = 0; i < countCreate; i++) {
                         Bank bank = Helper.getRandomBank(banks);
-                        bank.createAccountForPerson(p, rnd.nextDouble() * (rnd.nextInt(10_000) + 10));
+                        bank.createAccountForPerson(p, rnd.nextDouble() *
+                                (rnd.nextInt(10_000) + 10), Currency.getRandomCurrency());
                     }
                 });
 

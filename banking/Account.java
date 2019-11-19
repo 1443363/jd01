@@ -13,7 +13,7 @@ public class Account {
         this.id = id;
     }
 
-    public Account(String id, double balance) {
+    public Account(String id, double balance, Currency currency) {
         this.id = id;
         this.balance = balance;
     }
