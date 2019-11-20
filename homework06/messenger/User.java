@@ -8,8 +8,8 @@ public class User implements Serializable {
     private String login;
     private String password;
 
-    public User(String password){
-        this.password = password;
+    public User(String login){
+        this.login = login;
     }
 
     public String getLogin() {
