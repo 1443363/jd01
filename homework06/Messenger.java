@@ -2,7 +2,11 @@ package homework06;
 
 import homework06.messenger.*;
 import homework06.messenger.input.InputMessageFromKeyboard;
+import homework06.messenger.loader.FileLoader;
 import homework06.messenger.saver.ConsoleSaver;
+import homework06.messenger.saver.FileSaver;
+
+import java.io.File;
 
 
 public class Messenger {
@@ -30,15 +34,22 @@ public class Messenger {
     }
 
     public static void main(String[] args) {
+        File file = new File("messagesHistory.txt");
+        file.delete();
         User firstUser = new User("password1");
         User secondUser = new User("password2");
+        FileLoader fl = new FileLoader();
 
         Dialogs dialogs = new Dialogs();
         InputMessageFromKeyboard inputMessageFromKeyboard = new InputMessageFromKeyboard(dialogs, getValidUser(firstUser));
         inputMessageFromKeyboard.inputMessage();
         dialogs.history(new ConsoleSaver(System.out));
+        dialogs.history(new FileSaver(new File("messagesHistory.txt")));
         dialogs.editMessages(inputMessageFromKeyboard.getUser());
         dialogs.history(new ConsoleSaver(System.out));
+        dialogs.history(new FileSaver(new File("messagesHistory.txt")));
+        System.out.println("~~~~~~~~~~~~~~");
+        fl.loadHistory("messagesHistory.txt");
 
     }
 }
