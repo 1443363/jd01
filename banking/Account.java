@@ -2,9 +2,10 @@ package banking;
 
 import banking.additionals.Currency;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Account {
+public class Account implements Serializable{
     private final String id;
     private double balance;
     private Currency currency;

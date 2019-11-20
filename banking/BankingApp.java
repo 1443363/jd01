@@ -11,13 +11,11 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class BankingApp {
     static Random rnd = new Random();
 
-    static Queue<String> namesOfBank = new ConcurrentLinkedQueue<String>(){{
+    public static Queue<String> namesOfBank = new ConcurrentLinkedQueue<String>(){{
         add("Идея Банк");
         add("Банк БелВЭБ");
         add("Банк Решение");
@@ -50,7 +48,7 @@ public class BankingApp {
         add("Цептер Банк");
     }};
 
-    static List<String> names = new ArrayList<>(){{
+    public static List<String> names = new ArrayList<>(){{
         add("Аарон");
         add("Абрам");
         add("Аваз");
@@ -109,24 +107,11 @@ public class BankingApp {
         add("Ашот");
     }};
 
-    public final static List<Person> peoples = Stream.generate(() -> {
-        return new Person("MP" + rnd.nextInt(), names.get(rnd.nextInt(names.size())));
-    })
-                .limit(10_00)
-            .collect(Collectors.toList());
-
-    public final static List<Bank> banks = Stream.generate(() -> {
-        return new Bank(namesOfBank.poll());
-    })
-//            .limit(namesOfBank.size())
-            .limit(10)
-            .collect(Collectors.toList());
+    public final static List<Person> peoples = Helper.peoplesReadOrGenerate();
+    public final static List<Bank> banks = Helper.banksReadOrGenerate();
 
     public static void main(String[] args) {
-        Helper.readPersonsFromFile();
         ExecutorService executor = Executors.newCachedThreadPool();
-
-
 
         peoples.stream()
                 .filter(p -> rnd.nextBoolean())
@@ -156,6 +141,7 @@ public class BankingApp {
 
         Helper.banksToFile();
         Helper.writePersonsToFile();
+
     }
 
     private static class TransferThread implements Runnable{

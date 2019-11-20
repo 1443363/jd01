@@ -5,9 +5,10 @@ import banking.additionals.Currency;
 import banking.additionals.Helper;
 import banking.Person;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Bank implements IBank {
+public class Bank implements IBank, Serializable {
     private final String name;
     private Map<Person, List<Account>> data = new HashMap<>();
     private int transferOperations = 0;

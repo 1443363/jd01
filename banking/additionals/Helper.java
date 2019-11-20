@@ -7,6 +7,7 @@ import banking.banks.Bank;
 import banking.comparators.ComparatorBankBalance;
 import banking.comparators.ComparatorBankOperations;
 import homework04.dto.File;
+import sun.misc.Unsafe;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -14,6 +15,7 @@ import java.sql.SQLOutput;
 import java.text.Format;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static banking.BankingApp.banks;
 import static banking.BankingApp.peoples;
@@ -127,10 +129,13 @@ public class Helper {
     public static void banksToFile() {
         try (FileOutputStream fileOut = new FileOutputStream("listOfBanks.txt");
              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);) {
-
-            for (Bank bank : banks) {
-                objectOut.writeObject(bank.toString() + "\n");
-            }
+            banks.forEach( b -> {
+                try {
+                    objectOut.writeObject(b);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -139,27 +144,46 @@ public class Helper {
     public static void writePersonsToFile() {
         try (FileOutputStream fileOut = new FileOutputStream("listOfPersons.txt");
              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);) {
-
-            for (Person person : peoples) {
-                objectOut.writeObject(person.toString() + "\n");
-            }
+            peoples.forEach(p -> {
+                try {
+                    objectOut.writeObject(p);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void readPersonsFromFile() {
-        try (FileInputStream fileIn = new FileInputStream("listOfPersons.txt");
+    public static List<Bank> readBanksFromFile() {
+        List<Bank> banks = new ArrayList<>();
+        try (FileInputStream fileIn = new FileInputStream("listOfBanks.txt");
              ObjectInputStream objectIn = new ObjectInputStream(fileIn);) {
 
-            Person person = (Person) objectIn.readObject();
-            System.out.println("DSADAS!!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            System.out.println(person.toString());
+            while(fileIn.available() > 0) {
+                Bank bank = (Bank) objectIn.readObject();
+                banks.add(bank);
+            }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        return banks;
+    }
 
+    public static List<Person> readPersonsFromFile() {
+        List<Person> peoples = new ArrayList<>();
+        try (FileInputStream fileIn = new FileInputStream("listOfPersons.txt");
+             ObjectInputStream objectIn = new ObjectInputStream(fileIn);) {
 
+            while(fileIn.available() > 0) {
+                Person person = (Person) objectIn.readObject();
+                peoples.add(person);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return peoples;
     }
 
     public static double convertSum(Account accountFrom, Account accountTo, double sum) {
@@ -211,4 +235,30 @@ public class Helper {
         }
         throw new IllegalArgumentException("Невозможно произвести конвертацию, неизвестная валюта");
     }
+
+    public static List<Bank> banksReadOrGenerate() {
+        if(readBanksFromFile().size() == 0) {
+            return Stream.generate(() -> {
+                return new Bank(BankingApp.namesOfBank.poll());
+            })
+//            .limit(namesOfBank.size())
+                    .limit(10)
+                    .collect(Collectors.toList());
+        } else {
+            return readBanksFromFile();
+        }
+    }
+
+    public static List<Person> peoplesReadOrGenerate() {
+        if(readPersonsFromFile().size() == 0) {
+            return Stream.generate(() -> {
+                return new Person("MP" + rnd.nextInt(), BankingApp.names.get(rnd.nextInt(BankingApp.names.size())));
+            })
+                    .limit(10_00)
+                    .collect(Collectors.toList());
+        } else {
+            return readPersonsFromFile();
+        }
+    }
+
 }
