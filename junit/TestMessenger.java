@@ -61,9 +61,6 @@ public class TestMessenger {
     @DisplayName("Тесты проверки валидации пароля")
     @CsvSource(value = {"lo#12!giin:123login:ds"}, delimiter = ':')
     public void checkUserTest(String correctLogin, String incorrectLogin1, String incorrectLogin2) {
-        User user = new User(correctLogin);
-        System.out.println(ValidateUser.checkUser(user));
-        boolean isValidLogin = ValidateUser.checkUser(user);
         Assertions.assertTrue(ValidateUser.checkUser(new User(correctLogin)), "Валидация прошла успешно");
         Assertions.assertFalse(ValidateUser.checkUser(new User(incorrectLogin1)), "Валидация не должна " +
                 "пройти т.к. логин начинается с цифр");
