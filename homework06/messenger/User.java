@@ -1,9 +1,10 @@
 package homework06.messenger;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class User {
+public class User implements Serializable {
     private String login;
     private String password;
 

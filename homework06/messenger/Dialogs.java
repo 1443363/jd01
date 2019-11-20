@@ -70,9 +70,12 @@ public class Dialogs {
 
         for (Message message : this.messages) {
             if(message != null) {
-                saver.println(message.toString());
+                saver.println(message, this);
             }
         }
     }
 
+    public Message[] getMessages() {
+        return messages;
+    }
 }

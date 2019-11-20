@@ -34,6 +34,7 @@ public class Messenger {
     }
 
     public static void main(String[] args) {
+        //Удаляем файл, чтобы сохранялись данные в файл только о новом диалоге
         File file = new File("messagesHistory.txt");
         file.delete();
         User firstUser = new User("password1");
@@ -48,8 +49,8 @@ public class Messenger {
         dialogs.editMessages(inputMessageFromKeyboard.getUser());
         dialogs.history(new ConsoleSaver(System.out));
         dialogs.history(new FileSaver(new File("messagesHistory.txt")));
-        System.out.println("~~~~~~~~~~~~~~");
-        fl.loadHistory("messagesHistory.txt");
+        System.out.println("Выгружаем сообщения из файла: ");
+        System.out.println(fl.loadHistory("messagesHistory.txt", dialogs).toString());
 
     }
 }

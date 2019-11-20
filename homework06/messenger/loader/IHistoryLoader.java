@@ -1,5 +1,10 @@
 package homework06.messenger.loader;
 
+import homework06.messenger.Dialogs;
+import homework06.messenger.Message;
+
+import java.util.List;
+
 public interface IHistoryLoader {
-    void loadHistory(String file);
+    List<Message> loadHistory(String file, Dialogs dialogs);
 }
