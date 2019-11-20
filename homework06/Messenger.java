@@ -1,6 +1,8 @@
 package homework06;
 
-import homework06.messenger.*;
+import homework06.messenger.Dialogs;
+import homework06.messenger.User;
+import homework06.messenger.ValidateUser;
 import homework06.messenger.input.InputMessageFromKeyboard;
 import homework06.messenger.loader.FileLoader;
 import homework06.messenger.saver.ConsoleSaver;
@@ -50,7 +52,6 @@ public class Messenger {
         dialogs.history(new ConsoleSaver(System.out));
         dialogs.history(new FileSaver(new File("messagesHistory.txt")));
         System.out.println("Выгружаем сообщения из файла: ");
-        System.out.println(fl.loadHistory("messagesHistory.txt", dialogs).toString());
-
+        System.out.println(fl.loadHistory("messagesHistory.txt").toString());
     }
 }

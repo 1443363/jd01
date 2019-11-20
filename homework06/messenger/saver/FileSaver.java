@@ -1,9 +1,11 @@
 package homework06.messenger.saver;
 
-import homework06.messenger.Dialogs;
 import homework06.messenger.Message;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,24 +19,14 @@ public class FileSaver implements IHistorySaver {
         this.stream = stream;
     }
 
-//    @Override
-//    public void println(String s, Dialogs dialogs) {
-//        try (PrintWriter out = new PrintWriter(
-//                new BufferedWriter(new FileWriter(stream, true)));) {
-//            out.println(s);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     @Override
-    public void println(Message s, Dialogs dialogs) {
-        List<Message> messagesList = new ArrayList<>(Arrays.asList(dialogs.getMessages()));
+    public void println(Message[] m) {
+        List<Message> messages = new ArrayList<>(Arrays.asList(m));
         try (FileOutputStream fileOut = new FileOutputStream(stream);
              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);) {
-            messagesList.forEach(m -> {
+            messages.forEach(message -> {
                 try {
-                    objectOut.writeObject(m);
+                    objectOut.writeObject(message);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

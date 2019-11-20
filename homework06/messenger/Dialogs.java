@@ -68,11 +68,13 @@ public class Dialogs {
             }
         }
 
-        for (Message message : this.messages) {
-            if(message != null) {
-                saver.println(message, this);
-            }
-        }
+//        for (Message message : this.messages) {
+//            if(message != null) {
+//                saver.println(message);
+//            }
+//        }
+
+        saver.println(messages);
     }
 
     public Message[] getMessages() {
